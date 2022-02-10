@@ -2,7 +2,6 @@
 
 rm ~/.zshrc
 ln -s ~/.dotfiles/zshrc ~/.zshrc
-touch ~/.dotfiles/credentials
 touch ~/.dotfiles/zsh/device-specific
 sudo chsh -s $(which zsh) $USER
 echo "Include ~/.dotfiles/ssh/hosts" >> ~/.ssh/config
