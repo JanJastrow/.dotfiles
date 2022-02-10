@@ -1,5 +1,9 @@
 #!/bin/sh
 
+if [ ! -x `which zsh` ]; then
+	exit
+fi
+
 rm ~/.zshrc
 ln -s ~/.dotfiles/zshrc ~/.zshrc
 touch ~/.dotfiles/zsh/device-specific
@@ -10,4 +14,5 @@ chmod 600 ~/.ssh/config
 rm ~/.bashrc
 rm ~/.bash_logout
 rm ~/.bash_history
+
 zsh
