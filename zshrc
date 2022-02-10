@@ -9,7 +9,6 @@ autoload -U compinit && compinit
 prompt fade red
 
 # Load zsh settings
-source $HOME/.dotfiles/credentials
 source $HOME/.dotfiles/zsh/settings
 
 # Define platform
