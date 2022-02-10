@@ -11,8 +11,8 @@ sudo chsh -s $(which zsh) $USER
 
 # If private repo is available, add ssh config + hosts
 if [[ -d $HOME/.jan ]]; then
-    echo "Include ~/.jan/ssh_hosts" >> ~/.ssh/hosts
     echo "Include ~/.dotfiles/ssh/settings" >> ~/.ssh/config
+    echo "Include ~/.jan/ssh_hosts" >> ~/.ssh/config
     chmod 600 ~/.ssh/config
     chmod 600 ~/.jan/ssh_hosts
 fi
