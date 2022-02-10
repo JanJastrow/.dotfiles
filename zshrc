@@ -35,6 +35,11 @@ source $HOME/.dotfiles/zsh/scripts
 source $HOME/.dotfiles/zsh/ffmpeg
 source $HOME/.dotfiles/zsh/device-specific
 
+# Load private information from second repo
+if [[ -d $HOME/.jan ]]; then
+    source $HOME/.jan/credentials
+fi
+
 # Addons addons
 
 ## NNotes
