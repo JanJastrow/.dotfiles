@@ -1,5 +1,8 @@
 # dotfiles
 
+I moved from ```bash``` to ```zsh``` as my daily-driver a few years ago.  
+Since then I have collected some neat settings, scripts, aliases and other niceties.
+
 ## Install
 
 Clone repo do your user directory
