@@ -34,3 +34,7 @@ function png2web() {
 	rm -f "$f";
     done
 }
+
+function jpeg1024() {
+        magick "$1" -resize '1024x1024\>' -background black -flatten TGA:- | cjpeg -quality 70 -targa -outfile $1.jpg
+}
