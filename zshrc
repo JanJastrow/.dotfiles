@@ -38,12 +38,5 @@ source $HOME/.dotfiles/zsh/device-specific
 # Load private information from second repo
 if [[ -d $HOME/.jan ]]; then
     source $HOME/.jan/credentials
-fi
-
-# Addons addons
-
-## NNotes
-nnotesaddon="$HOME/.nnotes/.zsh-integration"
-if [[ -f $nnotesaddon ]]; then
-	source $nnotesaddon
+    source $HOME/.jan/zsh_options
 fi
