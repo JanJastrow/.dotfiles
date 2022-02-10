@@ -1,0 +1,77 @@
+#--------------------------------
+# filename:     /zsh/settings
+#--------------------------------
+
+# Set up the prompt
+
+# Share shell history between sessions
+setopt histignorealldups sharehistory
+
+# Use emacs keybindings even if our EDITOR is set to vi
+bindkey -e
+
+# Keep 10000 lines of history within the shell and save it to ~/.dotfiles/zsh/history:
+HISTSIZE=10000
+SAVEHIST=10000
+HISTFILE=$HOME/.dotfiles/zsh/history
+
+# zstyle completion
+zstyle ':completion:*' auto-description 'specify: %d'
+zstyle ':completion:*' completer _expand _complete _correct _approximate
+zstyle ':completion:*' format 'Completing %d'
+zstyle ':completion:*' group-name ''
+zstyle ':completion:*' menu select=2
+zstyle ':completion:*' list-colors "=(#b) #([0-9]#)*=36=31"
+zstyle ':completion:*' list-prompt %SAt %p: Hit TAB for more, or the character to insert%s
+zstyle ':completion:*' matcher-list '' 'm:{a-z}={A-Z}' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=* l:|=*'
+zstyle ':completion:*' menu select=long
+zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p%s
+zstyle ':completion:*' use-compctl false
+zstyle ':completion:*' verbose true
+# pasting with tabs doesn't perform completion
+zstyle ':completion:*' insert-tab pending
+
+zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
+
+zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
+zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
+
+#
+# Basic (recommended) zsh setup above
+# Additional setup below
+#
+
+# This makes cd=pushd
+setopt AUTO_PUSHD
+
+# why would you type 'cd dir' if you could just type 'dir'?
+setopt AUTO_CD
+
+# blank pushd goes to home
+setopt PUSHD_TO_HOME
+
+# 10 second wait if you do something that will delete everything.  I wish I'd had this before...
+setopt RM_STAR_WAIT
+
+# Don't overwrite, append!
+setopt APPEND_HISTORY
+
+# Killer: share history between multiple shells
+setopt SHARE_HISTORY
+
+# If I type cd and then cd again, only save the last one
+setopt HIST_IGNORE_DUPS
+
+# Even if there are commands inbetween commands that are the same, still only save the last one
+setopt HIST_IGNORE_ALL_DUPS
+
+# Pretty    Obvious.  Right?
+setopt HIST_REDUCE_BLANKS
+
+# Save the time and how long a command ran
+setopt EXTENDED_HISTORY
+
+# Don't log commands beginning with space
+# (+ Hack to exclude jrnl)
+setopt HIST_IGNORE_SPACE
+alias jrnl=" jrnl"

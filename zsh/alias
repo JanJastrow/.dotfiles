@@ -1,0 +1,69 @@
+#--------------------------------
+# filename:     /zsh/alias
+#--------------------------------
+
+# Better LS
+if [[ $platform == 'Linux' ]]; then
+	alias bls='pwd; ls -lahp --color=auto --group-directories-first'
+elif [[ $platform == 'macOS' && -x `which gls` ]]; then
+	alias bls='pwd; gls -lahpG --group-directories-first'
+elif [[ $platform == 'macOS' ]]; then
+	alias bls='/bin/ls -lahG'
+fi
+
+# Better exa
+if [[ -x `which exa` ]]; then
+	alias exa='pwd; exa -la --group-directories-first --git -g'
+fi
+
+# Better lsd
+if [[ -x `which lsd` ]]; then
+        alias lsd='pwd; lsd -laF --group-dirs=first --icon=never'
+fi
+
+# Update aliases
+if [[ -x `which brew` ]]; then
+	alias brewupdate='brew update; brew upgrade; brew upgrade --cask; brew cleanup'
+fi
+
+if [[ $platform == 'Linux' ]]; then
+	alias aptupdate='sudo apt update; sudo apt upgrade; sudo apt autoremove; sudo apt autoclean'
+fi
+
+# For fun
+alias fucking='sudo'
+alias please='sudo'
+
+# aria2c
+alias a2='aria2c -x4 -c -m3'
+
+# screen reconnect/init
+alias sc='screen -R'
+
+# Only download mp4 version of youtube
+alias ytmp4='youtube-dl -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]/mp4"'
+
+# rsync; archive, progress, partial, relative, humanreadable (add -z for compression)
+alias rrsync='rsync -avhP'
+
+# better scp
+alias bcp='rsync -avzuh --progress --partial'
+
+# generate pseudo-random hash
+alias random32="echo $(date +%s | md5sum | head -c 32)"
+
+# tar
+alias targz='tar -czvf'
+alias untargz='tar -xzvf'
+
+# linux stuff
+alias journ='journalctl -xfe -t'
+
+# own this dir (+subs)
+alias makeitmine='sudo chown -R $(whoami) ./'
+
+# ---
+# .dotfiles
+
+alias dotf='cd ~/.dotfiles'
+alias dotfu='cd ~/.dotfiles; git pull; cd -; source ~/.zshrc'

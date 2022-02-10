@@ -1,0 +1,36 @@
+#--------------------------------
+# filename:     /zsh/scripts
+#--------------------------------
+
+# Search for string in all files in pwd
+function f() {
+    grep -rnw ./ -e "$1"
+}
+
+# mkdir and cd
+function mkcd() {
+    mkdir -p "$@" && cd "$_";
+}
+
+# pushover notification
+function pushover() {
+	curl -s \
+	  --form-string "token=$pushover_token" \
+	  --form-string "user=$pushover_user" \
+	  --form-string "title=$HOST" \
+	  --form-string "message=$1" \
+	  https://api.pushover.net/1/messages.json
+}
+
+# png to jpg 85
+function png2web() {
+        findpath=$1
+        : ${findpath:="."}
+        find "$findpath" -name '*.png' | while read f ; do
+            dir=$(dirname "$f");
+            file=$(basename "$f");
+            name="${file%.*}";
+		magick convert "$f" pnm:- | cjpeg -progressive -quality 85 > "$dir/$name.jpg" </dev/null
+	rm -f "$f";
+    done
+}

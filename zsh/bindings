@@ -1,0 +1,13 @@
+#--------------------------------
+# filename:     /zsh/bindings
+#--------------------------------
+
+#if [[ $platform == 'Linux' ]]; then
+#	bindkey "^[[1;5C" forward-word
+#	bindkey "^[[1;5D" backward-word
+#	bindkey "^[[1;5A" history-beginning-search-backward
+#	bindkey "^[[1;5B" history-beginning-search-forward
+#fi
+
+bindkey "^[[A" 'history-search-backward'
+bindkey "^[[B" 'history-search-forward'
