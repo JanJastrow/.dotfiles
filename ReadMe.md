@@ -25,5 +25,5 @@ and run ```./install.sh```
   Small custom shell scripts
 - zsh/ffmpeg  
   FFmpeg helper scripts
-- zsh/device-specific
+- zsh/device-specific  
   Set settings/alias/etc only for this device and don't commit them
