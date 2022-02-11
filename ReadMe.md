@@ -1,4 +1,4 @@
-# dotfiles
+# .dotfiles
 
 I moved from ```bash``` to ```zsh``` as my daily-driver a few years ago.  
 Since then I have collected some neat settings, scripts, aliases and other niceties.
@@ -20,7 +20,7 @@ and run ```./install.sh```
 - zsh/alias  
   You guessed it
 - zsh/bindings  
-  You guessed it
+  Custom key bindings, but not really in use at the moment
 - zsh/scripts  
   Small custom shell scripts
 - zsh/ffmpeg  
