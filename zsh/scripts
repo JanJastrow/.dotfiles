@@ -36,5 +36,5 @@ function png2web() {
 }
 
 function jpeg1024() {
-        magick "$1" -resize '1024x1024\>' -background black -flatten TGA:- | cjpeg -quality 70 -targa -outfile $1.jpg
+        magick "$1" -resize '1024x1024\>' -background black -flatten TGA:- | cjpeg -targo -quality 75 -optimize -progressive -outfile $1.jpg
 }
