@@ -5,8 +5,8 @@
 autoload -Uz promptinit && promptinit
 autoload -U compinit && compinit
 
-# Default prompt design (color)
-prompt fade red
+# Prompt color
+prompt_color="#ffaf00"
 
 # Load zsh settings
 source $HOME/.dotfiles/zsh/settings
@@ -34,6 +34,10 @@ source $HOME/.dotfiles/zsh/bindings
 source $HOME/.dotfiles/zsh/scripts
 source $HOME/.dotfiles/zsh/ffmpeg
 source $HOME/.dotfiles/zsh/device-specific
+
+# Prompt design
+prompt="%F{#ffffff}%K{$prompt_color} ▓▒░%F%B%n@%m%b%F{$prompt_color}%K{#000000}█▓▒░%F{#ffffff}%K{#000000}%B %D{%Y-%m-%d} %D{%k:%M:%S}
+%}%F{$prompt_color}%K{#000000}%B%~/%b%k%f "
 
 # Load private information from second repo
 if [[ -d $HOME/.jan ]]; then
