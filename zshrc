@@ -36,7 +36,7 @@ source $HOME/.dotfiles/zsh/ffmpeg
 source $HOME/.dotfiles/zsh/device-specific
 
 # Prompt design
-prompt="%F{#ffffff}%K{$prompt_color} ▓▒░%F%B%n@%m%b%F{$prompt_color}%K{#000000}█▓▒░%F{#ffffff}%K{#000000}%B %D{%Y-%m-%d} %D{%k:%M:%S}
+prompt="%F{#000000}%K{$prompt_color} ▓▒░%F%B%n@%m%b%F{$prompt_color}%K{#000000}█▓▒░%F{#ffffff}%K{#000000}%B %D{%Y-%m-%d} %D{%k:%M:%S}
 %}%F{$prompt_color}%K{#000000}%B%~/%b%k%f "
 
 # Load private information from second repo
