@@ -30,6 +30,16 @@ elif [[ $(uname -p) == 'x86_64' ]]; then
     arch="x86_64"
 fi
 
+# Homebrew
+homebrew_path=""
+if test -f "/opt/homebrew/bin/brew"; then
+    homebrew_path="/opt/homebrew/bin"
+    homebrew_opt="/opt/homebrew/opt"
+elif test -f "/usr/local/bin/brew"; then
+     homebrew_path="/usr/local/bin"
+     homebrew_path="/usr/local/opt"
+fi
+
 # Load additional settings
 source $HOME/.dotfiles/zsh/env
 source $HOME/.dotfiles/zsh/alias

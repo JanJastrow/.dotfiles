@@ -13,10 +13,10 @@ export EDITOR="nano"
 
 # set `ll` command - b(etter)ls per default
 alias ll=bls
-if [[ -x `which /usr/local/bin/exa` || -x `which /opt/homebrew/bin/exa` ]]; then
+if test -f "$homebrew_path/exa"; then
     alias ll=exa
 fi
-if [[ -x `which /usr/local/bin/lsd` || -x `which /opt/homebrew/bin/lsd` ]]; then
+if test -f "$homebrew_path/lsd"; then
 	alias ll=lsd
 fi
 
@@ -60,17 +60,12 @@ if [[ $platform == 'macOS' ]]; then
     fi
 fi
 
-if test -d "/opt/homebrew/opt/openjdk/bin"; then
-        export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
-fi
-if test -d "/usr/local/opt/java/bin/"; then
-        export PATH="/usr/local/opt/java/bin/:$PATH"
+if test -d "$homebrew_opt/openjdk/bin/"; then
+    export PATH="$homebrew_opt/openjdk/bin:$PATH"
 fi
 
-/usr/local/opt/java/bin/
-
-if test -d "/usr/local/opt/ruby"; then
-	export PATH="/usr/local/opt/ruby/bin:$PATH"
+if test -d "$homebrew_opt/ruby"; then
+	export PATH="$homebrew_opt/ruby/bin:$PATH"
 fi
 
 if test -d "/usr/local/sbin"; then
