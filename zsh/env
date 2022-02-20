@@ -60,6 +60,10 @@ if [[ $platform == 'macOS' ]]; then
     fi
 fi
 
+if test -d "/opt/homebrew/opt/openjdk/bin"; then
+        export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
+fi
+
 if test -d "/usr/local/opt/ruby"; then
 	export PATH="/usr/local/opt/ruby/bin:$PATH"
 fi
