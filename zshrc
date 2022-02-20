@@ -36,8 +36,8 @@ if test -f "/opt/homebrew/bin/brew"; then
     homebrew_path="/opt/homebrew/bin"
     homebrew_opt="/opt/homebrew/opt"
 elif test -f "/usr/local/bin/brew"; then
-     homebrew_path="/usr/local/bin"
-     homebrew_path="/usr/local/opt"
+    homebrew_path="/usr/local/bin"
+    homebrew_opt="/usr/local/opt"
 fi
 
 # Load additional settings
