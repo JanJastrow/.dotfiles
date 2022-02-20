@@ -19,6 +19,8 @@ if [[ $(uname) == 'Linux' ]]; then
 elif [[ $(uname) == 'Darwin' ]]; then
    platform='macOS'
 fi
+
+# Define CPU architecture
 arch='Unknown'
 if [[ $(uname -p) == 'arm' ]]; then
     arch="arm"
