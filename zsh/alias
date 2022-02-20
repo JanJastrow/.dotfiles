@@ -18,7 +18,7 @@ fi
 
 # Better lsd
 if [[ -x `which lsd` ]]; then
-        alias lsd='pwd; lsd -laF --group-dirs=first --icon=never'
+    alias lsd='pwd; lsd -laF --group-dirs=first --icon=never'
 fi
 
 # Update aliases
