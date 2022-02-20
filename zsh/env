@@ -25,7 +25,7 @@ fi
 #
 
 if test -d "/opt/homebrew/"; then
-    export PATH="/opt/homebrew/bin/:$PATH"
+    export PATH="/opt/homebrew/bin:$PATH"
     eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
@@ -69,7 +69,7 @@ if test -d "$homebrew_opt/ruby"; then
 fi
 
 if test -d "/usr/local/sbin"; then
-        export PATH="/usr/local/sbin:$PATH"
+    export PATH="/usr/local/sbin:$PATH"
 fi
 
 #
