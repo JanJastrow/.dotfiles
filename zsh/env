@@ -63,6 +63,11 @@ fi
 if test -d "/opt/homebrew/opt/openjdk/bin"; then
         export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
 fi
+if test -d "/usr/local/opt/java/bin/"; then
+        export PATH="/usr/local/opt/java/bin/:$PATH"
+fi
+
+/usr/local/opt/java/bin/
 
 if test -d "/usr/local/opt/ruby"; then
 	export PATH="/usr/local/opt/ruby/bin:$PATH"
