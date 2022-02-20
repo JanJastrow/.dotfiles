@@ -2,6 +2,12 @@
 # filename:     /zsh/env
 #--------------------------------
 
+# set language
+export LANGUAGE=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+export LC_TYPE=en_US.UTF-8
+
 # set default editor
 export EDITOR="nano"
 
@@ -13,12 +19,6 @@ fi
 if [[ -x `which /usr/local/bin/lsd` || -x `which /opt/homebrew/bin/lsd` ]]; then
 	alias ll=lsd
 fi
-
-# set language
-export LANGUAGE=en_US.UTF-8
-export LC_ALL=en_US.UTF-8
-export LANG=en_US.UTF-8
-export LC_TYPE=en_US.UTF-8
 
 #
 # Path additions
