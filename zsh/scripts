@@ -38,3 +38,12 @@ function png2web() {
 function jpeg1024() {
         magick "$1" -resize '1024x1024\>' -background black -flatten TGA:- | cjpeg -targo -quality 75 -optimize -progressive -outfile $1.jpg
 }
+
+# Make PDFs look like scanned
+# src: https://gist.github.com/andyrbell/25c8632e15d17c83a54602f6acde2724?permalink_comment_id=3295405#gistcomment-3295405
+function pdf-like-scanned () {
+        OUT=$(basename "$1" .pdf)
+        convert -density 150 "$1" -rotate "$([ $((RANDOM % 2)) -eq 1 ] && echo -)0.$(($RANDOM % 4 + 5))" \
+                -attenuate 0.4 +noise Multiplicative -attenuate 0.03 +noise Multiplicative -sharpen 0x1.0 \
+                -colorspace Gray "$OUT"_scanned.pdf
+}
