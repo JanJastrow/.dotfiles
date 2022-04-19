@@ -30,6 +30,9 @@ if [[ $platform == 'Linux' ]]; then
 	alias aptupdate='sudo apt update; sudo apt upgrade; sudo apt autoremove; sudo apt autoclean'
 fi
 
+# tmux
+alias tm='tmux attach -t default || tmux new -s default'
+
 # For fun
 alias fucking='sudo'
 alias please='sudo'

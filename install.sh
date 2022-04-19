@@ -6,6 +6,7 @@ fi
 
 rm ~/.zshrc
 ln -s ~/.dotfiles/zshrc ~/.zshrc
+ln -s ~/.dotfiles/tmux/tmux.conf ~/.tmux.conf
 touch ~/.dotfiles/zsh/device-specific
 sudo chsh -s $(which zsh) $USER
 
