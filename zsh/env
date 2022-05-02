@@ -64,6 +64,10 @@ if test -d "$homebrew_opt/openjdk/bin/"; then
     export PATH="$homebrew_opt/openjdk/bin:$PATH"
 fi
 
+if test -d "$homebrew_opt/php@7.4"; then
+        export PATH="$homebrew_opt/php@7.4/bin:$PATH"
+fi
+
 if test -d "$homebrew_opt/ruby"; then
 	export PATH="$homebrew_opt/ruby/bin:$PATH"
 fi
