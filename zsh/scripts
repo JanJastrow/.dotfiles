@@ -13,7 +13,7 @@ function mkcd() {
 }
 
 # "Fake" sha256sum
-if [[ -x `which sha256sum` ]]; then
+if [[ ! -x `which sha256sum` ]]; then
     function sha256sum() {
         shasum -a256 $1
     }
