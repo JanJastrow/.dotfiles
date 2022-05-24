@@ -44,7 +44,12 @@ alias a2='aria2c -x4 -c -m3'
 alias sc='screen -R'
 
 # Only download mp4 version of youtube
-alias ytmp4='youtube-dl -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]/mp4"'
+if [[ -x `which yt-dlp` ]]; then
+        alias ytmp4='yt-dlp -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]/mp4"'
+elif [[ -x `which youtube-dl` ]]; then
+        alias ytmp4='youtube-dl -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]/mp4"'
+fi
+
 
 # rsync; archive, progress, partial, relative, humanreadable (add -z for compression)
 alias rrsync='rsync -avhP'
