@@ -39,7 +39,7 @@ function ff-input-to-ac3() {
 
 # ffmpeg fix 16:9 AR
 function ff-ar16-9() {	
-	ffmpeg -i "$1" -c copy -bsf:v "h264_metadata=sample_aspect_ratio=4/3" -aspect 16:9 -movflags faststart "_$1"
+	ffmpeg -i "$1" -c copy -map 0 -bsf:v "h264_metadata=sample_aspect_ratio=4/3" -aspect 16:9 -movflags faststart "_$1"
 }
 
 # ffmpeg fix Non-monotonous DTS
