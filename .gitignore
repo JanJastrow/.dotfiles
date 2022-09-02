@@ -1,3 +1,4 @@
 .DS_Store
 zsh/history
-zsh/device-specific
+this-machine/zsh
+this-machine/tmux.conf

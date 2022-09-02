@@ -46,7 +46,7 @@ source $HOME/.dotfiles/zsh/alias
 source $HOME/.dotfiles/zsh/bindings
 source $HOME/.dotfiles/zsh/scripts
 source $HOME/.dotfiles/zsh/ffmpeg
-source $HOME/.dotfiles/zsh/device-specific
+source $HOME/.dotfiles/this-machine/zsh
 
 # Prompt design
 prompt="%F{$prompt_color2}%K{$prompt_color1} ▓▒░%F%B%n@%m%b%F{$prompt_color1}%K{$prompt_color2}█▓▒░%F{#ffffff}%K{$prompt_color2}%B %D{%Y-%m-%d} %D{%k:%M:%S}

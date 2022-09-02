@@ -7,7 +7,8 @@ fi
 rm ~/.zshrc
 ln -s ~/.dotfiles/zshrc ~/.zshrc
 ln -s ~/.dotfiles/tmux/tmux.conf ~/.tmux.conf
-touch ~/.dotfiles/zsh/device-specific
+touch ~/.dotfiles/this-machine/zsh
+touch ~/.dotfiles/this-machine/tmux.conf
 sudo chsh -s $(which zsh) $USER
 
 # If private repo is available, add ssh config + hosts
