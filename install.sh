@@ -7,6 +7,7 @@ fi
 rm ~/.zshrc
 ln -s ~/.dotfiles/zshrc ~/.zshrc
 ln -s ~/.dotfiles/tmux/tmux.conf ~/.tmux.conf
+mkdir ~/.dotfiles/this-machine
 touch ~/.dotfiles/this-machine/zsh
 touch ~/.dotfiles/this-machine/tmux.conf
 sudo chsh -s $(which zsh) $USER
