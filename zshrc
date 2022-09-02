@@ -7,7 +7,7 @@ autoload -U compinit && compinit
 
 # Prompt color
 prompt_color1="#ffaf00"
-primpt_color2="#000000"
+prompt_color2="#000000"
 
 # Load zsh settings
 source $HOME/.dotfiles/zsh/settings
