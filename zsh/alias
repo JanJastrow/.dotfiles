@@ -81,3 +81,4 @@ alias makeitmine='sudo chown -R $(whoami) ./'
 
 alias dotf='cd ~/.dotfiles'
 alias dotfu='cd ~/.dotfiles; git pull; cd -; source ~/.zshrc'
+alias reload-zsh='source ~/.zshrc'
