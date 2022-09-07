@@ -70,6 +70,14 @@ if test -x "/Applications/Firefox.app/Contents/MacOS/firefox-bin"; then
 fi
 
 
+
+# git
+alias gadd='git add'
+alias gclone='git clone'
+alias gpull='git pull'
+alias gpush='git push'
+alias gcommit='git commit -m'
+
 # linux stuff
 alias journ='journalctl -xfe -t'
 
