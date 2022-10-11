@@ -19,6 +19,20 @@ if [[ ! -x `which sha256sum` ]]; then
     }
 fi
 
+# Tar.gz with GZIP or PIGZ
+function targz() {
+    if [ -z "$1" ]; then
+        echo "usage: targz filename.tar.gz directory"
+        return
+    fi
+    if [[ ! -x `which pigz` ]]; then
+        tar -czf $1 $2
+	echo "gzip"
+    else
+        tar -c $2 | pigz > $1
+	echo "pigz"
+    fi
+}
 
 # pushover notification
 function pushover() {

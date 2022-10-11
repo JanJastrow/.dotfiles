@@ -61,7 +61,6 @@ alias bcp='rsync -avzuh --progress --partial'
 alias random32="echo $(date +%s | md5sum | head -c 32)"
 
 # tar
-alias targz='tar -czvf'
 alias untargz='tar -xzvf'
 
 # (macOS) start Firefox Profile manager
