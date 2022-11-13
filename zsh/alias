@@ -5,24 +5,24 @@
 # Better LS
 if [[ $platform == 'Linux' ]]; then
 	alias bls='pwd; ls -lahp --color=auto --group-directories-first'
-elif [[ $platform == 'macOS' && -x `which gls` ]]; then
+elif [[ $platform == 'macOS' && -x $(which gls) ]]; then
 	alias bls='pwd; gls -lahpG --group-directories-first'
 elif [[ $platform == 'macOS' ]]; then
 	alias bls='/bin/ls -lahG'
 fi
 
 # Better exa
-if [[ -x `which exa` ]]; then
+if [[ -x $(which exa) ]]; then
 	alias exa='pwd; exa -la --group-directories-first --git -g'
 fi
 
 # Better lsd
-if [[ -x `which lsd` ]]; then
+if [[ -x $(which lsd) ]]; then
     alias lsd='pwd; lsd -laF --group-dirs=first --icon=never'
 fi
 
 # Update aliases
-if [[ -x `which brew` ]]; then
+if [[ -x $(which brew) ]]; then
 	alias brewupdate='brew update; brew upgrade; brew upgrade --cask; brew cleanup'
 fi
 
@@ -44,9 +44,9 @@ alias a2='aria2c -x4 -c -m3'
 alias sc='screen -R'
 
 # Only download mp4 version of youtube
-if [[ -x `which yt-dlp` ]]; then
+if [[ -x $(which yt-dlp) ]]; then
         alias ytmp4='yt-dlp -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]/mp4"'
-elif [[ -x `which youtube-dl` ]]; then
+elif [[ -x $(which youtube-dl) ]]; then
         alias ytmp4='youtube-dl -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]/mp4"'
 fi
 
@@ -58,13 +58,13 @@ alias rrsync='rsync -avhP'
 alias bcp='rsync -avzuh --progress --partial'
 
 # generate pseudo-random hash
-alias random32="echo $(date +%s | md5sum | head -c 32)"
+alias random32='echo $(date +%s | md5sum | head -c 32)'
 
 # tar
 alias untargz='tar -xzvf'
 
 # (macOS) start Firefox Profile manager
-if test -x "/Applications/Firefox.app/Contents/MacOS/firefox-bin"; then
+if test -x '/Applications/Firefox.app/Contents/MacOS/firefox-bin'; then
 	alias firefox-pm='/Applications/Firefox.app/Contents/MacOS/firefox-bin -P'
 fi
 

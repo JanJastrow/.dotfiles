@@ -10,7 +10,7 @@ prompt_color1="#ffaf00"
 prompt_color2="#000000"
 
 # Load zsh settings
-source $HOME/.dotfiles/zsh/settings
+source "$HOME/.dotfiles/zsh/settings"
 
 # Define platform
 platform='Unknown'
@@ -41,12 +41,12 @@ elif test -f "/usr/local/bin/brew"; then
 fi
 
 # Load additional settings
-source $HOME/.dotfiles/zsh/env
-source $HOME/.dotfiles/zsh/alias
-source $HOME/.dotfiles/zsh/bindings
-source $HOME/.dotfiles/zsh/scripts
-source $HOME/.dotfiles/zsh/ffmpeg
-source $HOME/.dotfiles/this-machine/zsh
+source "$HOME/.dotfiles/zsh/env"
+source "$HOME/.dotfiles/zsh/alias"
+source "$HOME/.dotfiles/zsh/bindings"
+source "$HOME/.dotfiles/zsh/scripts"
+source "$HOME/.dotfiles/zsh/ffmpeg"
+source "$HOME/.dotfiles/this-machine/zsh"
 
 # Prompt design
 prompt="%F{$prompt_color2}%K{$prompt_color1} ▓▒░%F%B%n@%m%b%F{$prompt_color1}%K{$prompt_color2}█▓▒░%F{#ffffff}%K{$prompt_color2}%B %D{%Y-%m-%d} %D{%k:%M:%S}
@@ -54,6 +54,6 @@ prompt="%F{$prompt_color2}%K{$prompt_color1} ▓▒░%F%B%n@%m%b%F{$prompt_colo
 
 # Load private information from second repo
 if [[ -d $HOME/.jan ]]; then
-    source $HOME/.jan/credentials
-    source $HOME/.jan/zsh_options
+    source "$HOME/.jan/credentials"
+    source "$HOME/.jan/zsh_options"
 fi

@@ -9,13 +9,13 @@ function f() {
 
 # mkdir and cd
 function mkcd() {
-    mkdir -p "$@" && cd "$_";
+    mkdir -p "$@" && cd "$_" || exit;
 }
 
 # "Fake" sha256sum
-if [[ ! -x `which sha256sum` ]]; then
+if [[ ! -x $(which sha256sum) ]]; then
     function sha256sum() {
-        shasum -a256 $1
+        shasum -a256 "$1"
     }
 fi
 
@@ -25,11 +25,11 @@ function targz() {
         echo "usage: targz filename.tar.gz directory"
         return
     fi
-    if [[ ! -x `which pigz` ]]; then
-        tar -czf $1 $2
+    if [[ ! -x $(which pigz) ]]; then
+        tar -czf "$1" "$2"
 	echo "gzip"
     else
-        tar -c $2 | pigz > $1
+        tar -c "$2" | pigz > "$1"
 	echo "pigz"
     fi
 }
@@ -47,8 +47,8 @@ function pushover() {
 # png to jpg 85
 function png2web() {
         findpath=$1
-        : ${findpath:="."}
-        find "$findpath" -name '*.png' | while read f ; do
+        : "${findpath:="."}"
+        find "$findpath" -name '*.png' | while read -r f ; do
             dir=$(dirname "$f");
             file=$(basename "$f");
             name="${file%.*}";
@@ -58,7 +58,7 @@ function png2web() {
 }
 
 function jpeg1024() {
-        magick "$1" -resize '1024x1024\>' -background black -flatten TGA:- | cjpeg -targo -quality 75 -optimize -progressive -outfile $1.jpg
+        magick "$1" -resize '1024x1024\>' -background black -flatten TGA:- | cjpeg -targo -quality 75 -optimize -progressive -outfile "$1".jpg
 }
 
 # Make PDFs look like scanned
@@ -73,21 +73,21 @@ function pdf-like-scanned () {
 # Extract files
 # src: https://github.com/mawalu/dotfiles/blob/master/zsh/.zsh/functions.zsh#L21
 function extract () {
-    if [ -f $1 ] ; then
+    if [ -f "$1" ] ; then
         case $1 in
-            *.tar.bz2) tar xjf $1 ;;
-            *.tar.gz) tar xzf $1 ;;
-            *.bz2) bunzip2 $1 ;;
-            *.rar) unrar x $1 ;;
-            *.gz) gunzip $1 ;;
-            *.tar) tar xf $1 ;;
-            *.tbz2) tar xjf $1 ;;
-            *.tbz) tar xjf $1 ;;
-            *.tgz) tar xzf $1 ;;
-            *.zip) unzip $1 ;;
-            *.Z) uncompress $1;;
-            *.7z) 7z x $1 ;;
-            *) echo "'$1' cannot be extracted via ex()" ;;
+            *.tar.bz2) tar xjf "$1" ;;
+            *.tar.gz) tar xzf "$1" ;;
+            *.bz2) bunzip2 "$1" ;;
+            *.rar) unrar x "$1" ;;
+            *.gz) gunzip "$1" ;;
+            *.tar) tar xf "$1" ;;
+            *.tbz2) tar xjf "$1" ;;
+            *.tbz) tar xjf "$1" ;;
+            *.tgz) tar xzf "$1" ;;
+            *.zip) unzip "$1" ;;
+            *.Z) uncompress "$1" ;;
+            *.7z) 7z x "$1" ;;
+            *) echo "'$1' cannot be extracted via extract()" ;;
        esac
     else
         echo "'$1' is not a valid file"

@@ -6,8 +6,8 @@
 # source: https://yohanes.gultom.me/2016/05/21/bash-script-to-batch-convert-mkv-to-mp4-linux/
 function ff-mp4() {
 	findpath=$1
-	: ${findpath:="."}
-	find "$findpath" \( -iname '*.mkv' -o -iname '*.flv' -o -iname '*.mov' \) | while read f ; do
+	: "${findpath:="."}"
+	find "$findpath" \( -iname '*.mkv' -o -iname '*.flv' -o -iname '*.mov' \) | while read -r f ; do
 	    dir=$(dirname "$f");
 	    file=$(basename "$f");
 	    # ext="${filename##*.}";
@@ -21,8 +21,8 @@ function ff-mp4() {
 # source: https://yohanes.gultom.me/2016/05/21/bash-script-to-batch-convert-mkv-to-mp4-linux/
 function ff-ac3-to-stereo() {
         findpath=$1
-        : ${findpath:="."}
-        find "$findpath" \( -iname '*.mkv' -o -iname '*.flv' -o -iname '*.mov' -o -iname '*.mp4' \) | while read f ; do
+        : "${findpath:="."}"
+        find "$findpath" \( -iname '*.mkv' -o -iname '*.flv' -o -iname '*.mov' -o -iname '*.mp4' \) | while read -r f ; do
             dir=$(dirname "$f");
             file=$(basename "$f");
             # ext="${filename##*.}";
@@ -50,8 +50,8 @@ function ff-dts() {
 ## ffmpeg wma-to-m4a
 function ff-wma-m4a() {
         findpath=$1
-        : ${findpath:="."}
-        find "$findpath" -name '*.wma' | while read f ; do
+        : "${findpath:="."}"
+        find "$findpath" -name '*.wma' | while read -r f ; do
             dir=$(dirname "$f");
             file=$(basename "$f");
             # ext="${filename##*.}";
