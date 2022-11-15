@@ -21,7 +21,7 @@ if [[ -x $(which lsd) ]]; then
     alias lsd='pwd; lsd -laF --group-dirs=first --icon=never'
 fi
 
-# Update aliases
+# Update tools/OS aliases
 if [[ -x $(which brew) ]]; then
 	alias brewupdate='brew update; brew upgrade; brew upgrade --cask; brew cleanup'
 fi
@@ -43,12 +43,15 @@ alias a2='aria2c -x4 -c -m3'
 # screen reconnect/init
 alias sc='screen -R'
 
-# Only download mp4 version of youtube
+# youtube-dl / yt-dlp
 if [[ -x $(which yt-dlp) ]]; then
-        alias ytmp4='yt-dlp -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]/mp4"'
+        alias ydl='yt-dlp'
 elif [[ -x $(which youtube-dl) ]]; then
-        alias ytmp4='youtube-dl -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]/mp4"'
+        alias ydl='youtube-dl'
 fi
+
+# youtube-dl(p) - Download only best MP4
+alias ytmp4='ydl -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]/mp4"'
 
 
 # rsync; archive, progress, partial, relative, humanreadable (add -z for compression)
