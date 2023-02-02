@@ -34,6 +34,11 @@ function targz() {
     fi
 }
 
+# Export manpage as PDF
+function manp() {
+    man -t $1 | pstopdf -o $TMPDIR/$1.pdf && open $TMPDIR/$1.pdf && sleep 1 && rm $TMPDIR/$1.pdf 
+}
+
 # pushover notification
 function pushover() {
 	curl -s \
