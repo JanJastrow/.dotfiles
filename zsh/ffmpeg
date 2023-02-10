@@ -42,6 +42,16 @@ function ff-ar16-9() {
 	ffmpeg -i "$1" -c copy -map 0 -bsf:v "h264_metadata=sample_aspect_ratio=4/3" -aspect 16:9 -movflags faststart "_$1"
 }
 
+# ffmpeg fix 5:4 AR
+function ff-ar5-4() {
+        ffmpeg -i "$1" -c copy -map 0 -bsf:v "h264_metadata=sample_aspect_ratio=1/1" -aspect 5:4 -movflags faststart "_$1"
+}
+
+# ffmpeg fix 4:3 AR
+function ff-ar4-3() {
+        ffmpeg -i "$1" -c copy -map 0 -bsf:v "h264_metadata=sample_aspect_ratio=1/1" -aspect 4:3 -movflags faststart "_$1"
+}
+
 # ffmpeg fix Non-monotonous DTS
 function ff-dts() {
 	ffmpeg -fflags +igndts -i "$1" -c copy -movflags faststart "_$1"
