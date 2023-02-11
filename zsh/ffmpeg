@@ -5,16 +5,19 @@
 # ffmpeg-recontainer
 # source: https://yohanes.gultom.me/2016/05/21/bash-script-to-batch-convert-mkv-to-mp4-linux/
 function ff-mp4() {
-	findpath=$1
-	: "${findpath:="."}"
-	find "$findpath" \( -iname '*.mkv' -o -iname '*.flv' -o -iname '*.mov' \) | while read -r f ; do
-	    dir=$(dirname "$f");
-	    file=$(basename "$f");
-	    # ext="${filename##*.}";
-	    name="${file%.*}";
-	    ffmpeg -i "$f" -map 0 -c copy -movflags faststart "$dir/$name.mp4" </dev/null;
-	    # rm -f "$f";
-	done
+        findpath=$1
+        : "${findpath:="."}"
+        find "$findpath" \( -iname '*.mkv' -o -iname '*.flv' -o -iname '*.mov' -o -iname '*.mp4*' \) | while read -r f ; do
+                dir=$(dirname "$f");
+                file=$(basename "$f");
+                name="${file%.*}";
+                ext="${file##*.}";
+
+                ffmpeg -hide_banner -loglevel error -i "$f" -map 0 -c copy -movflags faststart "$dir/temp_$name.mp4";
+
+                mv "$f" "$dir/_$file";
+                mv "$dir/temp_$name.mp4" "$dir/$file";
+        done
 }
 
 # ffmpeg-convert
@@ -23,38 +26,46 @@ function ff-ac3-to-stereo() {
         findpath=$1
         : "${findpath:="."}"
         find "$findpath" \( -iname '*.mkv' -o -iname '*.flv' -o -iname '*.mov' -o -iname '*.mp4' \) | while read -r f ; do
-            dir=$(dirname "$f");
-            file=$(basename "$f");
-            # ext="${filename##*.}";
-            name="${file%.*}";
-            ffmpeg -i "$f" -map 0 -c:v copy -c:a libfdk_aac -b:a 192k -ac 2 -af volume=2 -movflags faststart "$dir/$name.mp4" </dev/null;
-            # rm -f "$f";
+                dir=$(dirname "$f");
+                file=$(basename "$f");
+                name="${file%.*}";
+                ext="${file##*.}";
+
+                ffmpeg -hide_banner -loglevel error -i "$f" -map 0 -c:v copy -c:a libfdk_aac -b:a 192k -ac 2 -af volume=2 -movflags faststart "$dir/temp_$name.mp4";
+
+                mv "$f" "$dir/_$file";
+                mv "$dir/temp_$name.mp4" "$dir/$file";
         done
 }
 
 # ffmpeg audio-to-ac3
 function ff-input-to-ac3() {
-	ffmpeg -i "$1" -movflags faststart -map 0 -c:v copy -c:s copy -c:a ac3 -b:a 448k "_$1"
+	ffmpeg -i "$1" -movflags faststart -map 0 -c:v copy -c:s copy -c:a ac3 -b:a 448k "temp_$1"
+	mv "$1" "_$1" && mv "temp_$1" "$1"	
 }
 
 # ffmpeg fix 16:9 AR
 function ff-ar16-9() {	
-	ffmpeg -i "$1" -c copy -map 0 -bsf:v "h264_metadata=sample_aspect_ratio=4/3" -aspect 16:9 -movflags faststart "_$1"
+	ffmpeg -i "$1" -c copy -map 0 -bsf:v "h264_metadata=sample_aspect_ratio=4/3" -aspect 16:9 -movflags faststart "temp_$1"
+        mv "$1" "_$1" && mv "temp_$1" "$1"
 }
 
 # ffmpeg fix 5:4 AR
 function ff-ar5-4() {
-        ffmpeg -i "$1" -c copy -map 0 -bsf:v "h264_metadata=sample_aspect_ratio=1/1" -aspect 5:4 -movflags faststart "_$1"
+        ffmpeg -i "$1" -c copy -map 0 -bsf:v "h264_metadata=sample_aspect_ratio=1/1" -aspect 5:4 -movflags faststart "temp_$1"
+        mv "$1" "_$1" && mv "temp_$1" "$1"
 }
 
 # ffmpeg fix 4:3 AR
 function ff-ar4-3() {
-        ffmpeg -i "$1" -c copy -map 0 -bsf:v "h264_metadata=sample_aspect_ratio=1/1" -aspect 4:3 -movflags faststart "_$1"
+        ffmpeg -i "$1" -c copy -map 0 -bsf:v "h264_metadata=sample_aspect_ratio=1/1" -aspect 4:3 -movflags faststart "temp_$1"
+        mv "$1" "_$1" && mv "temp_$1" "$1"
 }
 
 # ffmpeg fix Non-monotonous DTS
 function ff-dts() {
-	ffmpeg -fflags +igndts -i "$1" -c copy -movflags faststart "_$1"
+	ffmpeg -fflags +igndts -i "$1" -c copy -movflags faststart "temp_$1"
+        mv "$1" "_$1" && mv "temp_$1" "$1"
 }
 
 ## ffmpeg wma-to-m4a
@@ -62,11 +73,14 @@ function ff-wma-m4a() {
         findpath=$1
         : "${findpath:="."}"
         find "$findpath" -name '*.wma' | while read -r f ; do
-            dir=$(dirname "$f");
-            file=$(basename "$f");
-            # ext="${filename##*.}";
-            name="${file%.*}";
-            ffmpeg -i "$f" -map 0 -vn -b:a 160k -c:a libfdk_aac "$dir/$name.m4a" </dev/null;
-            # rm -f "$f";
+                dir=$(dirname "$f");
+                file=$(basename "$f");
+                name="${file%.*}";
+                ext="${file##*.}";
+
+                ffmpeg -hide_banner -loglevel error -i "$f" -map 0 -vn -b:a 192k -c:a libfdk_aac "$dir/temp_$name.mp4";
+
+                mv "$f" "$dir/_$file";
+                mv "$dir/temp_$name.mp4" "$dir/$file";
         done
 }
