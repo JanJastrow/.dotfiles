@@ -1,0 +1,13 @@
+set autoindent
+set tabsize 4
+
+set softwrap
+set atblanks
+
+set linenumbers
+set numbercolor #9d5,#111
+
+set functioncolor #9d5,#111
+set indicator
+set mouse
+set smarthome
