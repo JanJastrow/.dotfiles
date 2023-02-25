@@ -1,13 +1,15 @@
-set autoindent
+set autoindent # indent a newly created lines
 set tabsize 4
 
-set softwrap
-set atblanks
+set softwrap # wrap lines
+set atblanks # wrap at empty positions (e.g. space, tabs)
 
-set linenumbers
+set linenumbers # show line numbers at the left side
 set numbercolor #9d5,#111
 
+set indicator # display a "scrollbar" on the right side
+set scrollercolor #9d5,#111
+
 set functioncolor #9d5,#111
-set indicator
-set mouse
-set smarthome
+set mouse # enable mouse support
+set smarthome # 'Home' key position the cursor smarter
