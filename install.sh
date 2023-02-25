@@ -10,7 +10,7 @@ ln -s ~/.dotfiles/tmux/tmux.conf ~/.tmux.conf
 mkdir ~/.dotfiles/this-machine
 touch ~/.dotfiles/this-machine/zsh
 touch ~/.dotfiles/this-machine/tmux.conf
-sudo chsh -s '$(which zsh)' "$USER"
+sudo chsh -s "$(which zsh)" $USER
 
 # If private repo is available, add ssh config + hosts
 if [ -d "$HOME/.jan" ]; then
