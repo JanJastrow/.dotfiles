@@ -13,7 +13,7 @@ function ff-mp4() {
                 name="${file%.*}";
                 ext="${file##*.}";
 
-                ffmpeg -hide_banner -loglevel error -i "$f" -map 0 -c copy -movflags faststart "$dir/temp_$name.mp4";
+                ffmpeg -hide_banner -loglevel error -i "$f" -map 0 -c copy -pix_fmt yuv420p -movflags faststart "$dir/temp_$name.mp4";
 
                 mv "$f" "$dir/_$file";
                 mv "$dir/temp_$name.mp4" "$dir/$file";
@@ -46,35 +46,35 @@ function ff-input-to-ac3() {
 
 # ffmpeg fix 16:9 AR
 function ff-ar16-9() {	
-	ffmpeg -i "$1" -c copy -map 0 -bsf:v "h264_metadata=sample_aspect_ratio=4/3" -aspect 16:9 -movflags faststart "temp_$1"
+	ffmpeg -i "$1" -c copy -map 0 -bsf:v "h264_metadata=sample_aspect_ratio=4/3" -aspect 16:9 -pix_fmt yuv420p -movflags faststart "temp_$1"
         mv "$1" "_$1" && mv "temp_$1" "$1"
 }
 
 # ffmpeg fix 5:4 AR
 function ff-ar5-4() {
-        ffmpeg -i "$1" -c copy -map 0 -bsf:v "h264_metadata=sample_aspect_ratio=1/1" -aspect 5:4 -movflags faststart "temp_$1"
+        ffmpeg -i "$1" -c copy -map 0 -bsf:v "h264_metadata=sample_aspect_ratio=1/1" -aspect 5:4 -pix_fmt yuv420p -movflags faststart "temp_$1"
         mv "$1" "_$1" && mv "temp_$1" "$1"
 }
 
 # ffmpeg fix 4:3 AR
 function ff-ar4-3() {
-        ffmpeg -i "$1" -c copy -map 0 -bsf:v "h264_metadata=sample_aspect_ratio=1/1" -aspect 4:3 -movflags faststart "temp_$1"
+        ffmpeg -i "$1" -c copy -map 0 -bsf:v "h264_metadata=sample_aspect_ratio=1/1" -aspect 4:3 -pix_fmt yuv420p -movflags faststart "temp_$1"
         mv "$1" "_$1" && mv "temp_$1" "$1"
 }
 
-# ffmpeg fix 4:3 AR ($1 = file, $2 1/1, $4:3) 
+# ffmpeg fix AR ($1 = file, $2 1/1, $4:3) 
 function ff-ar-custom() {
 	if [ $# -lt 3 ]; then
 	    >&2 echo "Not enough arguments (\$1 = 'file', \$2 '1/1', \$3 '4:3')"
 	    return 0
 	else
-	        ffmpeg -i "$1" -c copy -map 0 -bsf:v "h264_metadata=sample_aspect_ratio=$2" -aspect $3 -movflags faststart "_$1"
+	        ffmpeg -i "$1" -c copy -map 0 -bsf:v "h264_metadata=sample_aspect_ratio=$2" -aspect $3 -pix_fmt yuv420p -movflags faststart "_$1"
 	fi
 }
 
 # ffmpeg fix Non-monotonous DTS
 function ff-dts() {
-	ffmpeg -fflags +igndts -i "$1" -c copy -movflags faststart "temp_$1"
+	ffmpeg -fflags +igndts -i "$1" -c copy -pix_fmt yuv420p -movflags faststart "temp_$1"
         mv "$1" "_$1" && mv "temp_$1" "$1"
 }
 
