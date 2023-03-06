@@ -2,22 +2,39 @@
 # filename:     /zsh/ffmpeg
 #--------------------------------
 
-# ffmpeg-recontainer
-# source: https://yohanes.gultom.me/2016/05/21/bash-script-to-batch-convert-mkv-to-mp4-linux/
-function ff-mp4() {
-        findpath=$1
-        : "${findpath:="."}"
-        find "$findpath" \( -iname '*.mkv' -o -iname '*.flv' -o -iname '*.mov' -o -iname '*.mp4*' \) | while read -r f ; do
-                dir=$(dirname "$f");
-                file=$(basename "$f");
-                name="${file%.*}";
-                ext="${file##*.}";
+# Original script: https://yohanes.gultom.me/2016/05/21/bash-script-to-batch-convert-mkv-to-mp4-linux/
+# Rewritten with ChatGPT 🙈
 
-                ffmpeg -hide_banner -loglevel error -i "$f" -map 0 -c copy -pix_fmt yuv420p -movflags faststart "$dir/temp_$name.mp4";
+function ff-mp4 () {
+  local findpath="${1:-.}"
+  local file_list=()
+  local temp_file=$(mktemp)
 
-                mv "$f" "$dir/_$file";
-                mv "$dir/temp_$name.mp4" "$dir/$file";
-        done
+  # Find all video files and write them to a temporary file
+  find "$findpath" \( -iname '*.mkv' -o -iname '*.flv' -o -iname '*.mov' -o -iname '*.mp4' \) -print0 > "$temp_file"
+
+  # Read the file contents into the file_list array
+  while IFS= read -r -d $'\0' file; do
+    file_list+=("$file")
+  done < "$temp_file"
+  rm "$temp_file" # Delete the temporary file
+
+  # Process each file in the file_list array
+  for file in "${file_list[@]}"; do
+    local dir=$(dirname "$file")
+    local file_name=$(basename "$file")
+    local name="${file_name%.*}"
+    local ext="${file_name##*.}"
+
+    echo "Processing file: $file_name"
+
+    # Re-container the video file to mp4 using ffmpeg
+    ffmpeg -hide_banner -loglevel error -i "$file" -map 0 -c copy -pix_fmt yuv420p -movflags faststart "$dir/temp_$name.mp4"
+
+    # Rename the original file and move the new mp4 file to its place
+    mv -n "$file" "$dir/_$file_name"
+    mv -n "$dir/temp_$name.mp4" "$dir/$file_name"
+  done
 }
 
 # ffmpeg-convert
