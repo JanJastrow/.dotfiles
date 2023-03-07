@@ -20,13 +20,16 @@ function ff-mp4 () {
   rm "$temp_file" # Delete the temporary file
 
   # Process each file in the file_list array
+  local num_files=${#file_list[@]}
+  local counter=1
   for file in "${file_list[@]}"; do
     local dir=$(dirname "$file")
     local file_name=$(basename "$file")
     local name="${file_name%.*}"
     local ext="${file_name##*.}"
 
-    echo "Processing file: $file_name"
+	echo "Processing file [$counter/$num_files]: $file_name"
+	counter=$((counter+1))
 
     # Re-container the video file to mp4 using ffmpeg
     ffmpeg -hide_banner -loglevel error -i "$file" -map 0 -c copy -pix_fmt yuv420p -movflags faststart "$dir/temp_$name.mp4"
