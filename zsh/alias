@@ -31,7 +31,7 @@ if [[ $platform == 'Linux' ]]; then
 fi
 
 # tmux
-alias tm='tmux attach -t default || tmux new -s default'
+alias tm='tmux -u new -A -s default'
 
 # For fun
 alias fucking='sudo'
