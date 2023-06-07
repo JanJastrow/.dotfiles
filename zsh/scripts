@@ -98,3 +98,27 @@ function extract () {
         echo "'$1' is not a valid file"
     fi  
 }
+
+# Monitor IP/Host and report with Pushover
+pnotify-online() {
+    local ip_address="$1"
+
+    while true; do
+        if ping -c 1 -W 1 "$ip_address" >/dev/null; then
+			echo "$1 is online now."
+            pushover "$1 is online now."
+            break
+        fi
+    done
+}
+
+pnotify-offline() {
+    local ip_address="$1"
+    while true; do
+        if ! ping -c 1 -W 1 "$ip_address" >/dev/null; then
+			echo "$1 is offline now."
+            pushover "$1 is offline now."
+            break
+        fi
+    done
+}
