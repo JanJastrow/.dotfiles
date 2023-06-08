@@ -1,7 +1,7 @@
 # .dotfiles
 
-I moved from ```bash``` to ```zsh``` as my daily-driver a few years ago.  
-Since then I have collected some neat settings, scripts, aliases and other niceties.
+I moved from `bash` to `zsh` as my daily-driver a few years ago.  
+Since then I have collected some neat settings, scripts, aliases and other niceties - not only for `zsh`, but also other CLI tools.
 
 ## Install
 
@@ -9,21 +9,29 @@ Clone repo do your user directory
 
 ```~/.dotfiles```
 
-and run ```./install.sh```
+and run `./install.sh`
 
-## Explanation of files
+## Definition for each file
 
 - zsh/settings  
-  Set up the zsh environment
+  Basic zsh settings
 - zsh/env  
-  Add different folders with binaries to your $PATH and load the rest of my environment
+  Adds additional folders to the `$PATH` + the rest of the environment
 - zsh/alias  
-  You guessed it
+  Aliases and shortcuts
 - zsh/bindings  
-  Custom key bindings, but not really in use at the moment
+  Custom key bindings; mostly unused
 - zsh/scripts  
-  Small custom shell scripts
+  Small custom shell scripts & functions
 - zsh/ffmpeg  
-  FFmpeg helper scripts
-- zsh/device-specific  
-  Set settings/alias/etc only for this device and don't commit them
+  FFmpeg helper functions
+- tmux/tmux.conf  
+  Settings for my `tmux` environment
+- ssh/settings  
+  Defaults for SSH connections
+- nanorc  
+  Settings for the `nano` editor
+- this-machine/zsh  
+  Preferences that only apply to the current machine (*git-exluded*)
+- this-machine/tmux.conf  
+  Preferences that only apply to the current machine (*git-exluded*)
