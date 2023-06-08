@@ -72,7 +72,7 @@ if test -x '/Applications/Firefox.app/Contents/MacOS/firefox-bin'; then
 fi
 
 # zspotify (Docker)
-zspotify='docker run -v ${HOME}/.zspotify:/root/.zspotify -v ${HOME}/Music:/root/Music -it jsavargas/zspotify'
+alias zspotify='docker run -v ${HOME}/.zspotify:/root/.zspotify -v ${HOME}/Music:/root/Music -it jsavargas/zspotify'
 
 
 # git
