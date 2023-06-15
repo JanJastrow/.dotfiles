@@ -49,7 +49,7 @@ source "$HOME/.dotfiles/zsh/ffmpeg"
 source "$HOME/.dotfiles/this-machine/zsh"
 
 # Prompt design
-prompt="%F{$prompt_color2}%K{$prompt_color1} ▓▒░%F%B%n@%m%b%F{$prompt_color1}%K{$prompt_color2}█▓▒░%F{#ffffff}%K{$prompt_color2}%B %D{%Y-%m-%d} %D{%k:%M:%S}
+prompt="%F{$prompt_color2}%K{$prompt_color1}▓▒░ %F%B%n@%m%b%F{$prompt_color1}%K{$prompt_color2}█▓▒░%F{#ffffff}%K{$prompt_color2}%B %D{%Y-%m-%d} %D{%k:%M:%S} 
 %}%F{$prompt_color1}%K{$prompt_color2}%B%~/%b%k%f "
 
 # Load private information from second repo
@@ -57,3 +57,9 @@ if [[ -d $HOME/.jan ]]; then
     source "$HOME/.jan/credentials"
     source "$HOME/.jan/zsh_options"
 fi
+
+PATH="/Users/jan/perl5/bin${PATH:+:${PATH}}"; export PATH;
+PERL5LIB="/Users/jan/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
+PERL_LOCAL_LIB_ROOT="/Users/jan/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
+PERL_MB_OPT="--install_base \"/Users/jan/perl5\""; export PERL_MB_OPT;
+PERL_MM_OPT="INSTALL_BASE=/Users/jan/perl5"; export PERL_MM_OPT;
