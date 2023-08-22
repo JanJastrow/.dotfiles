@@ -82,6 +82,9 @@ alias gpull='git pull'
 alias gpush='git push'
 alias gcommit='git commit -m'
 
+# docker
+alias dcdu='docker compose down && docker compose up -d'
+
 # linux stuff
 alias journ='journalctl -xfe -t'
 
