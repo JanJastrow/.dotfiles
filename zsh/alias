@@ -13,7 +13,8 @@ fi
 
 # Better exa
 if [[ -x $(which exa) ]]; then
-	alias exa='pwd; exa -la --group-directories-first --git -g'
+	alias exa='pwd; exa --long --all --all --group-directories-first --git --group'
+	# --all (2x) to show `.` and `..` directories as well
 fi
 
 # Better lsd
