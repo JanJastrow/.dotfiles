@@ -79,11 +79,10 @@ fi
 # evals
 #
 
-# TheFuck
-if [[ -x $(which thefuck) ]]; then
-	eval "$(thefuck --alias)"
-	# You can use whatever you want as an alias, like for Mondays:
-	eval "$(thefuck --alias FUCK)"
-
-	alias fuck='eval $(thefuck $(fc -ln -1 | tail -n 1)); fc -R'
+# Replace default `thefuck` eval with suggestion from GitHub
+# https://github.com/nvbn/thefuck/issues/859
+if command -v thefuck >/dev/null 2>&1; then
+    fuck() {
+        eval "$(thefuck --alias)" && fuck
+    }
 fi
