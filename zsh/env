@@ -49,14 +49,13 @@ fi
 
 # Add syncthing synced binary folder to $PATH
 if [[ $platform == 'macOS' ]]; then
+    export PATH="$HOME/SyncMac/Apps/bin/universal:$PATH"
+	export PATH="$HOME/SyncMac/Apps/bin/x86_64_rosetta2:$PATH"
+
     if [[ $arch == 'arm' ]]; then
 	export PATH="$HOME/SyncMac/Apps/bin/arm64:$PATH"
-	export PATH="$HOME/SyncMac/Apps/bin/universal:$PATH"
-	export PATH="$HOME/SyncMac/Apps/bin/x86_64_rosetta2:$PATH"
     elif [[ $arch == 'i386' ]]; then
-        export PATH="$HOME/SyncMac/Apps/bin/universal:$PATH"
         export PATH="$HOME/SyncMac/Apps/bin/x86_64:$PATH"
-        export PATH="$HOME/SyncMac/Apps/bin/x86_64_rosetta2:$PATH"
     fi
 fi
 
