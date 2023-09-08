@@ -11,9 +11,9 @@ elif [[ $platform == 'macOS' ]]; then
 	alias bls='/bin/ls -lahG'
 fi
 
-# Better exa
-if [[ -x $(which exa) ]]; then
-	alias exa='pwd; exa --long --all --all --group-directories-first --git --group'
+# Better eza
+if [[ -x $(which eza) ]]; then
+	alias eza='pwd; eza --long --all --all --group-directories-first --git --group'
 	# --all (2x) to show `.` and `..` directories as well
 fi
 
