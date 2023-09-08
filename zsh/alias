@@ -54,17 +54,13 @@ fi
 # youtube-dl(p) - Download only best MP4
 alias ytmp4='ydl -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]/mp4"'
 
-
-# rsync; archive, progress, partial, relative, humanreadable (add -z for compression)
-alias rrsync='rsync -avhP'
-
 # better scp
 alias bcp='rsync -avzuh --progress --partial'
 
 # generate pseudo-random hash
 alias random32='echo $(date +%s | md5sum | head -c 32)'
 
-# tar
+# tar extract
 alias untargz='tar -xzvf'
 
 # (macOS) start Firefox Profile manager
@@ -74,7 +70,6 @@ fi
 
 # zspotify (Docker)
 alias zspotify='docker run -v ${HOME}/.zspotify:/root/.zspotify -v ${HOME}/Music:/root/Music -it jsavargas/zspotify'
-
 
 # git
 alias gadd='git add'
