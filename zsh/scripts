@@ -49,7 +49,11 @@ function pushover() {
 	  https://api.pushover.net/1/messages.json
 }
 
+<<<<<<< HEAD
 # png to jpg 95
+=======
+# png to jpg 85
+>>>>>>> parent of d1425c4 (Increase jpg quality)
 function png2web() {
         findpath=$1
         : "${findpath:="."}"
@@ -57,7 +61,11 @@ function png2web() {
             dir=$(dirname "$f");
             file=$(basename "$f");
             name="${file%.*}";
+<<<<<<< HEAD
 		magick convert "$f" pnm:- | cjpeg -progressive -quality 95 > "$dir/$name.jpg" </dev/null
+=======
+		magick convert "$f" pnm:- | cjpeg -progressive -quality 85 > "$dir/$name.jpg" </dev/null
+>>>>>>> parent of d1425c4 (Increase jpg quality)
 	rm -f "$f";
     done
 }
