@@ -6,56 +6,57 @@
 # Rewritten with ChatGPT 🙈
 
 function ff-mp4 () {
-  local findpath="${1:-.}"
-  local file_list=()
-  local temp_file=$(mktemp)
+        local findpath="${1:-.}"
+        local file_list=()
+        local temp_file=$(mktemp)
 
-  # Find all video files and write them to a temporary file
-  find "$findpath" \( -iname '*.mkv' -o -iname '*.flv' -o -iname '*.mov' -o -iname '*.mp4' \) -print0 > "$temp_file"
+        # Find all video files and write them to a temporary file
+        find "$findpath" \( -iname '*.mkv' -o -iname '*.flv' -o -iname '*.mov' -o -iname '*.mp4' \) -print0 > "$temp_file"
 
-  # Read the file contents into the file_list array
-  while IFS= read -r -d $'\0' file; do
-    file_list+=("$file")
-  done < "$temp_file"
-  rm "$temp_file" # Delete the temporary file
+        # Read the file contents into the file_list array
+        while IFS= read -r -d $'\0' file; do
+                file_list+=("$file")
+        done < "$temp_file"
+        rm "$temp_file" # Delete the temporary file
 
-  # Process each file in the file_list array
-  local num_files=${#file_list[@]}
-  local counter=1
-  for file in "${file_list[@]}"; do
-    local dir=$(dirname "$file")
-    local file_name=$(basename "$file")
-    local name="${file_name%.*}"
-    local ext="${file_name##*.}"
+        # Process each file in the file_list array
+        local num_files=${#file_list[@]}
+        local counter=1
+        for file in "${file_list[@]}"; do
+                local dir=$(dirname "$file")
+                local file_name=$(basename "$file")
+                local name="${file_name%.*}"
+                local ext="${file_name##*.}"
 
 	echo "Processing file [$counter/$num_files]: $file_name"
 	counter=$((counter+1))
 
-    # Re-container the video file to mp4 using ffmpeg
-    ffmpeg -hide_banner -loglevel error -i "$file" -map 0 -c copy -pix_fmt yuv420p -movflags faststart "$dir/temp_$name.mp4"
+        # Re-container the video file to mp4 using ffmpeg
+        ffmpeg -hide_banner -loglevel error -i "$file" -map 0 -c copy -pix_fmt yuv420p -movflags faststart "$dir/temp_$name.mp4"
 
-    # Rename the original file and move the new mp4 file to its place
-    mv -n "$file" "$dir/_$file_name"
-    mv -n "$dir/temp_$name.mp4" "$dir/$file_name"
-  done
+        # Rename the original file and move the new mp4 file to its place
+        mv -n "$file" "$dir/_$file_name"
+        mv -n "$dir/temp_$name.mp4" "$dir/$file_name"
+
+done
 }
 
 # Recompress input MP4 to 720p MP4 (copy audio)
 ff-recompress720p() {
-  for input in *.mp4; do
-    if [[ -f "$input" ]]; then
-      tempfile="temp_${input%.mp4}"
-      ffmpeg -hide_banner -i "$input" -map 0 -c:v libx264 -crf 18 -vf scale=1280:-1 -preset slow -tune film -x264-params "ref=5:bframes=5:crf-max=25:qpmax=34:level=3.1:b-adapt=2:direct=auto:deblock=-1,-1:analyse=all:me=umh:subme=9:trellis=2:psy-rd=1,0.15:vbv-bufsize=17500:vbv-maxrate=17500:rc-lookahead=60" -c:a copy -movflags faststart "$tempfile.mp4"
+        for input in *.mp4; do
+        if [[ -f "$input" ]]; then
+                tempfile="temp_${input%.mp4}"
+                ffmpeg -hide_banner -i "$input" -map 0 -c:v libx264 -crf 18 -vf scale=1280:-1 -preset slow -tune film -x264-params "ref=5:bframes=5:crf-max=25:qpmax=34:level=3.1:b-adapt=2:direct=auto:deblock=-1,-1:analyse=all:me=umh:subme=9:trellis=2:psy-rd=1,0.15:vbv-bufsize=17500:vbv-maxrate=17500:rc-lookahead=60" -c:a copy -movflags faststart "$tempfile.mp4"
 
-      if [[ $? -eq 0 ]]; then
-        mv "$input" "_$input"
-        mv "$tempfile.mp4" "$input"
-        echo "Conversion successful: $input"
-      else
-        echo "Conversion failed for: $input"
-      fi
-    fi
-  done
+                if [[ $? -eq 0 ]]; then
+                        mv "$input" "_$input"
+                        mv "$tempfile.mp4" "$input"
+                        echo "Conversion successful: $input"
+                else
+                        echo "Conversion failed for: $input"
+                fi
+        fi
+done
 }
 
 # ffmpeg-convert
@@ -103,10 +104,10 @@ function ff-ar4-3() {
 # ffmpeg fix AR ($1 = file, $2 1/1, $4:3) 
 function ff-ar-custom() {
 	if [ $# -lt 3 ]; then
-	    >&2 echo "Not enough arguments (\$1 = 'file', \$2 '1/1', \$3 '4:3')"
-	    return 0
+                >&2 echo "Not enough arguments (\$1 = 'file', \$2 '1/1', \$3 '4:3')"
+                return 0
 	else
-	        ffmpeg -i "$1" -c copy -map 0 -bsf:v "h264_metadata=sample_aspect_ratio=$2" -aspect $3 -pix_fmt yuv420p -movflags faststart "_$1"
+        ffmpeg -i "$1" -c copy -map 0 -bsf:v "h264_metadata=sample_aspect_ratio=$2" -aspect $3 -pix_fmt yuv420p -movflags faststart "_$1"
 	fi
 }
 
