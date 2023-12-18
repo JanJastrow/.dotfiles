@@ -133,3 +133,19 @@ function ff-wma-m4a() {
                 mv "$dir/temp_$name.mp4" "$dir/$file";
         done
 }
+
+## ffmpeg cut X seconds from start
+function ff-cutstart {
+        local time="${2:-00:00:08.590}"
+        mv "$1" "_$1"
+        ffmpeg -ss $time -i "_$1" -map 0 -c copy -movflags faststart "$1"
+}
+
+## ffmpeg cut X seconds from start
+function ff-cutend {
+        local time="${2:-24.250}"
+        duration=`ffprobe -v error -show_entries format=duration -of csv=p=0 "$1"`
+        duration=`bc --expression=$duration-$time`
+        mv "$1" "_$1"
+        ffmpeg -ss 00:00:00 -to $duration -i "_$1" -map 0 -c copy -movflags faststart "$1"
+}
