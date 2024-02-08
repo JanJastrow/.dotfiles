@@ -79,25 +79,25 @@ function ff-ac3-to-stereo() {
 
 # ffmpeg audio-to-ac3
 function ff-input-to-ac3() {
-	ffmpeg -i "$1" -movflags faststart -map 0 -c:v copy -c:s copy -c:a ac3 -b:a 448k "temp_$1"
+	ffmpeg -hide_banner -loglevel error -i "$1" -movflags faststart -map 0 -c:v copy -c:s copy -c:a ac3 -b:a 448k "temp_$1"
 	mv "$1" "_$1" && mv "temp_$1" "$1"	
 }
 
 # ffmpeg fix 16:9 AR
 function ff-ar16-9() {	
-	ffmpeg -i "$1" -c copy -map 0 -bsf:v "h264_metadata=sample_aspect_ratio=4/3" -aspect 16:9 -pix_fmt yuv420p -movflags faststart "temp_$1"
+	ffmpeg -hide_banner -loglevel error -i "$1" -c copy -map 0 -bsf:v "h264_metadata=sample_aspect_ratio=4/3" -aspect 16:9 -pix_fmt yuv420p -movflags faststart "temp_$1"
         mv "$1" "_$1" && mv "temp_$1" "$1"
 }
 
 # ffmpeg fix 5:4 AR
 function ff-ar5-4() {
-        ffmpeg -i "$1" -c copy -map 0 -bsf:v "h264_metadata=sample_aspect_ratio=1/1" -aspect 5:4 -pix_fmt yuv420p -movflags faststart "temp_$1"
+        ffmpeg -hide_banner -loglevel error -i "$1" -c copy -map 0 -bsf:v "h264_metadata=sample_aspect_ratio=1/1" -aspect 5:4 -pix_fmt yuv420p -movflags faststart "temp_$1"
         mv "$1" "_$1" && mv "temp_$1" "$1"
 }
 
 # ffmpeg fix 4:3 AR
 function ff-ar4-3() {
-        ffmpeg -i "$1" -c copy -map 0 -bsf:v "h264_metadata=sample_aspect_ratio=1/1" -aspect 4:3 -pix_fmt yuv420p -movflags faststart "temp_$1"
+        ffmpeg -hide_banner -loglevel error -i "$1" -c copy -map 0 -bsf:v "h264_metadata=sample_aspect_ratio=1/1" -aspect 4:3 -pix_fmt yuv420p -movflags faststart "temp_$1"
         mv "$1" "_$1" && mv "temp_$1" "$1"
 }
 
@@ -107,13 +107,13 @@ function ff-ar-custom() {
                 >&2 echo "Not enough arguments (\$1 = 'file', \$2 '1/1', \$3 '4:3')"
                 return 0
 	else
-        ffmpeg -i "$1" -c copy -map 0 -bsf:v "h264_metadata=sample_aspect_ratio=$2" -aspect $3 -pix_fmt yuv420p -movflags faststart "_$1"
+        ffmpeg -hide_banner -loglevel error -i "$1" -c copy -map 0 -bsf:v "h264_metadata=sample_aspect_ratio=$2" -aspect $3 -pix_fmt yuv420p -movflags faststart "_$1"
 	fi
 }
 
 # ffmpeg fix Non-monotonous DTS
 function ff-dts() {
-	ffmpeg -fflags +igndts -i "$1" -c copy -pix_fmt yuv420p -movflags faststart "temp_$1"
+	ffmpeg -hide_banner -loglevel error -fflags +igndts -i "$1" -c copy -pix_fmt yuv420p -movflags faststart "temp_$1"
         mv "$1" "_$1" && mv "temp_$1" "$1"
 }
 
@@ -138,7 +138,7 @@ function ff-wma-m4a() {
 function ff-cutstart {
         local time="${2:-00:00:08.590}"
         mv "$1" "_$1"
-        ffmpeg -ss $time -i "_$1" -map 0 -c copy -movflags faststart "$1"
+        ffmpeg -hide_banner -loglevel error -ss $time -i "_$1" -map 0 -c copy -movflags faststart "$1"
 }
 
 ## ffmpeg cut X seconds from start
@@ -147,5 +147,5 @@ function ff-cutend {
         duration=`ffprobe -v error -show_entries format=duration -of csv=p=0 "$1"`
         duration=`bc --expression=$duration-$time`
         mv "$1" "_$1"
-        ffmpeg -ss 00:00:00 -to $duration -i "_$1" -map 0 -c copy -movflags faststart "$1"
+        ffmpeg -hide_banner -loglevel error -ss 00:00:00 -to $duration -i "_$1" -map 0 -c copy -movflags faststart "$1"
 }
