@@ -55,7 +55,24 @@ ff-recompress720p() {
                         echo "Conversion failed for: $input"
                 fi
         fi
-done
+	done
+}
+
+# Recompress input MP4 to 540p MP4 (copy audio)
+ff-recompress540p() {
+        for input in *.mp4; do
+        if [[ -f "$input" ]]; then
+                tempfile="temp_${input%.mp4}"
+                ffmpeg -hide_banner -i "$input" -map 0 -c:v libx264 -crf 18 -vf scale=960:-2 -preset slow -tune film -x264-params "ref=5:bframes=5:crf-max=25:qpmax=34:level=3.1:b-adapt=2:direct=auto:deblock=-1,-1:analyse=all:me=umh:subme=9:trellis=2:psy-rd=1,0.15:vbv-bufsize=17500:vbv-maxrate=17500:rc-lookahead=60" -c:a copy -movflags faststart "$tempfile.mp4"
+                if [[ $? -eq 0 ]]; then
+                        mv "$input" "_$input"
+                        mv "$tempfile.mp4" "$input"
+                        echo "Conversion successful: $input"
+                else
+                        echo "Conversion failed for: $input"
+                fi
+        fi
+        done
 }
 
 # ffmpeg-convert
