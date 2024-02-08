@@ -36,9 +36,8 @@ function ff-mp4 () {
 
         # Rename the original file and move the new mp4 file to its place
         mv -n "$file" "$dir/_$file_name"
-        mv -n "$dir/temp_$name.mp4" "$dir/$file_name"
-
-done
+        mv -n "$dir/temp_$name.mp4" "$dir/$file_name.mp4"
+	done
 }
 
 # Recompress input MP4 to 720p MP4 (copy audio)
