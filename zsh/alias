@@ -28,7 +28,7 @@ if [[ -x $(which brew) ]]; then
 fi
 
 if [[ $platform == 'Linux' ]]; then
-	alias aptupdate='sudo apt update; sudo apt upgrade; sudo apt autoremove; sudo apt autoclean'
+	alias aptupdate='sudo apt update && sudo apt upgrade -y && sudo apt autoremove -y && sudo apt clean'
 fi
 
 # tmux
