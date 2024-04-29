@@ -99,6 +99,19 @@ function extract () {
     fi  
 }
 
+# Download provided url to $HOME/Downloads
+function dl() {
+    if [ -z "$1" ]; then
+        echo "usage: dl url (directory)"
+        return
+    fi
+    if [[ -x $(which aria2) ]]; then
+        aria2c --dir="$HOME/Downloads" --continue=true --max-connection-per-server=5 "$1"
+    else
+        (cd "$HOME/Downloads" && curl -O "$1")
+    fi
+}
+
 # Monitor IP/Host and report with Pushover
 pnotify-online() {
     local ip_address="$1"
