@@ -119,6 +119,7 @@ pnotify-online() {
 
     while true; do
         if ping -c 1 -W 1 "$ip_address" >/dev/null; then
+            echo -e "\07*Ding*"
 			echo "$1 is online now."
             pushover "$1 is online now."
             break
@@ -132,6 +133,7 @@ pnotify-offline() {
     
     while true; do
         if ! ping -c 1 -W 1 "$ip_address" >/dev/null; then
+            echo -e "\07*Ding*"
 			echo "$1 is offline now."
             pushover "$1 is offline now."
             break
