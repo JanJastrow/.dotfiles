@@ -4,7 +4,7 @@
 
 # ffmpeg function to find borders for cropping
 	function ff-crop() {
-		ffmpeg -hide_banner -i "$1" -vf cropdetect,metadata=mode=print -f null -
+		ffmpeg -hide_banner -i "$1" -vf cropdetect,metadata=mode=print -f null - 2>&1 | awk '/crop=/ { print $NF }'
 }
 
 
