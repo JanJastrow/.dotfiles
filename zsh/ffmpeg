@@ -2,6 +2,12 @@
 # filename:     /zsh/ffmpeg
 #--------------------------------
 
+# ffmpeg function to find borders for cropping
+	function ff-crop() {
+		ffmpeg -hide_banner -i "$1" -vf cropdetect,metadata=mode=print -f null -
+}
+
+
 # Original script: https://yohanes.gultom.me/2016/05/21/bash-script-to-batch-convert-mkv-to-mp4-linux/
 # Rewritten with ChatGPT 🙈
 
