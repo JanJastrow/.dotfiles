@@ -1,9 +1,22 @@
-# This is Git's per-user configuration file.
+# Custom (default) settings for git
 [user]
-# Please adapt and uncomment the following lines:
-name = Jan Jastrow
-email = mail@jastrow.me
+	name = Jan Jastrow
+	username = jan_j
+	email = mail@jastrow.me
 [core]
 	fsmonitor = true
+    editor = nano -w
+[init]
+    defaultBranch = main
+[alias]
+	br = branch
+	c = commit
+	co = checkout
+	ca = c -a
+	p = pull
+	l = log --all --color --graph --pretty=format:'%Cred%h%Creset %G?%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit # Colorful and easy to read log
+	conflict = diff --name-only --diff-filter=U
+	hash = !git rev-parse HEAD | cut -c 1-8
+	undo = !f() { git reset --hard $(git rev-parse --abbrev-ref HEAD)@{${1-1}}; }; f
 [branch]
-  sort = -committerdate
+	sort = -committerdate
