@@ -9,6 +9,7 @@ rm ~/.zshrc
 ln -s ~/.dotfiles/zshrc ~/.zshrc
 ln -s ~/.dotfiles/tmux/tmux.conf ~/.tmux.conf
 ln -s ~/.dotfiles/gitconfig ~/.gitconfig
+ln -s ~/.dotfiles/nanorc ~/.nanorc
 mkdir ~/.dotfiles/this-machine
 touch ~/.dotfiles/this-machine/zsh
 touch ~/.dotfiles/this-machine/tmux.conf
