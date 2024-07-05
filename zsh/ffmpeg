@@ -2,15 +2,9 @@
 # filename:     /zsh/ffmpeg
 #--------------------------------
 
-# ffmpeg function to find borders for cropping
-	function ff-crop() {
-		ffmpeg -hide_banner -i "$1" -vf cropdetect,metadata=mode=print -f null - 2>&1 | awk '/crop=/ { print $NF }'
-}
-
-
+# "Repackge" video file into MP4 container
 # Original script: https://yohanes.gultom.me/2016/05/21/bash-script-to-batch-convert-mkv-to-mp4-linux/
 # Rewritten with ChatGPT 🙈
-
 function ff-mp4 () {
         local findpath="${1:-.}"
         local file_list=()
@@ -46,13 +40,16 @@ function ff-mp4 () {
 	done
 }
 
-# Recompress input MP4 to 720p MP4 (copy audio)
-ff-recompress720p() {
+#
+# Video scaling/reencoding
+#
+
+# Recompress input MP4 to 720p x264 MP4 (copy audio)
+ff-x264-scale720p() {
         for input in *.mp4; do
         if [[ -f "$input" ]]; then
                 tempfile="temp_${input%.mp4}"
-                ffmpeg -hide_banner -i "$input" -c:v libx264 -crf 18 -vf scale=1280:-2 -preset slow -tune film -x264-params "ref=5:bframes=5:crf-max=25:qpmax=34:level=3.1:b-adapt=2:direct=auto:deblock=-1,-1:analyse=all:me=umh:subme=9:trellis=2:psy-rd=1,0.15:vbv-bufsize=17500:vbv-maxrate=17500:rc-lookahead=60" -c:a copy -c:s copy -movflags faststart "$tempfile.mp4"
-
+                ffmpeg -hide_banner -loglevel error -i "$input" -c:v libx264 -crf 18 -vf scale=1280:-2 -preset slow -tune film -x264-params "ref=5:bframes=5:crf-max=25:qpmax=34:level=3.1:b-adapt=2:direct=auto:deblock=-1,-1:analyse=all:me=umh:subme=9:trellis=2:psy-rd=1,0.15:vbv-bufsize=17500:vbv-maxrate=17500:rc-lookahead=60" -c:a copy -c:s copy -movflags faststart "$tempfile.mp4"
                 if [[ $? -eq 0 ]]; then
                         mv "$input" "_$input"
                         mv "$tempfile.mp4" "$input"
@@ -64,12 +61,12 @@ ff-recompress720p() {
 	done
 }
 
-# Recompress input MP4 to 540p MP4 (copy audio)
-ff-recompress540p() {
+# Recompress input MP4 to 540p x264 MP4 (copy audio)
+ff-x264-scale540p() {
         for input in *.mp4; do
         if [[ -f "$input" ]]; then
                 tempfile="temp_${input%.mp4}"
-                ffmpeg -hide_banner -i "$input" -c:v libx264 -crf 18 -vf scale=960:-2 -preset slow -tune film -x264-params "ref=5:bframes=5:crf-max=25:qpmax=34:level=3.1:b-adapt=2:direct=auto:deblock=-1,-1:analyse=all:me=umh:subme=9:trellis=2:psy-rd=1,0.15:vbv-bufsize=17500:vbv-maxrate=17500:rc-lookahead=60" -c:a copy -c:s copy -movflags faststart "$tempfile.mp4"
+                ffmpeg -hide_banner -loglevel error -i "$input" -c:v libx264 -crf 18 -vf scale=960:-2 -preset slow -tune film -x264-params "ref=5:bframes=5:crf-max=25:qpmax=34:level=3.1:b-adapt=2:direct=auto:deblock=-1,-1:analyse=all:me=umh:subme=9:trellis=2:psy-rd=1,0.15:vbv-bufsize=17500:vbv-maxrate=17500:rc-lookahead=60" -c:a copy -c:s copy -movflags faststart "$tempfile.mp4"
                 if [[ $? -eq 0 ]]; then
                         mv "$input" "_$input"
                         mv "$tempfile.mp4" "$input"
@@ -81,29 +78,88 @@ ff-recompress540p() {
         done
 }
 
-# ffmpeg-convert
-# source: https://yohanes.gultom.me/2016/05/21/bash-script-to-batch-convert-mkv-to-mp4-linux/
-function ff-ac3-to-stereo() {
+# Recompress input MP4 to 720p AV1 MP4 (copy audio)
+ff-av1-scale720p() {
+        for input in *.mp4; do
+        if [[ -f "$input" ]]; then
+                tempfile="temp_${input%.mp4}"
+                ffmpeg -hide_banner -loglevel error -i "$input" -vf format=yuv420p,scale=1280:-2 -c:v libsvtav1 -preset 5 -crf 18 -g 300 -svtav1-params tune=0 -c:a copy -c:s copy "$tempfile.mp4"
+                if [[ $? -eq 0 ]]; then
+                        mv "$input" "_$input"
+                        mv "$tempfile.mp4" "$input"
+                        echo "Conversion successful: $input"
+                else
+                        echo "Conversion failed for: $input"
+                fi
+        fi
+	done
+}
+
+#
+# Video helper
+#
+
+# ffmpeg function to find borders for cropping
+function ff-crop() {
+	ffmpeg -hide_banner -loglevel error -i "$1" -vf cropdetect,metadata=mode=print -f null - 2>&1 | awk '/crop=/ { print $NF }'
+}
+
+# ffmpeg fix Non-monotonous DTS
+function ff-dts() {
+	ffmpeg -hide_banner -loglevel error -fflags +igndts -i "$1" -c copy -pix_fmt yuv420p -movflags faststart "temp_$1"
+        mv "$1" "_$1" && mv "temp_$1" "$1"
+}
+
+#
+# Convert audio
+#
+
+# ffmpeg audio-to-ac3
+function ff-audio-to-ac3() {
+	ffmpeg -hide_banner -loglevel error -i "$1" -movflags faststart -map 0 -c:v copy -c:s copy -c:a ac3 -b:a 448k "temp_$1"
+	mv "$1" "_$1" && mv "temp_$1" "$1"	
+}
+
+## ffmpeg wma-to-m4a
+function ff-wma-to-m4a() {
         findpath=$1
         : "${findpath:="."}"
-        find "$findpath" \( -iname '*.mkv' -o -iname '*.flv' -o -iname '*.mov' -o -iname '*.mp4' \) | while read -r f ; do
+        find "$findpath" -name '*.wma' | while read -r f ; do
                 dir=$(dirname "$f");
                 file=$(basename "$f");
                 name="${file%.*}";
                 ext="${file##*.}";
 
-                ffmpeg -hide_banner -loglevel error -i "$f" -map 0 -c:v copy -c:a libfdk_aac -b:a 192k -ac 2 -af volume=2 -movflags faststart "$dir/temp_$name.mp4";
+                ffmpeg -hide_banner -loglevel error -i "$f" -map 0 -vn -b:a 192k -c:a libfdk_aac "$dir/temp_$name.mp4";
 
                 mv "$f" "$dir/_$file";
                 mv "$dir/temp_$name.mp4" "$dir/$file";
         done
 }
 
-# ffmpeg audio-to-ac3
-function ff-input-to-ac3() {
-	ffmpeg -hide_banner -loglevel error -i "$1" -movflags faststart -map 0 -c:v copy -c:s copy -c:a ac3 -b:a 448k "temp_$1"
-	mv "$1" "_$1" && mv "temp_$1" "$1"	
+#
+# Cut parts of the file
+#
+
+## ffmpeg cut X seconds from start
+function ff-cutstart {
+        local time="${2:-00:00:08.590}"
+        mv "$1" "_$1"
+        ffmpeg -hide_banner -loglevel error -ss $time -i "_$1" -map 0 -c copy -movflags faststart "$1"
 }
+
+## ffmpeg cut X seconds from start
+function ff-cutend {
+        local time="${2:-24.250}"
+        duration=`ffprobe -v error -show_entries format=duration -of csv=p=0 "$1"`
+        duration=`bc --expression=$duration-$time`
+        mv "$1" "_$1"
+        ffmpeg -hide_banner -loglevel error -ss 00:00:00 -to $duration -i "_$1" -map 0 -c copy -movflags faststart "$1"
+}
+
+#
+# Correct/fix aspect ratio
+#
 
 # ffmpeg fix 16:9 AR
 function ff-ar16-9() {	
@@ -131,43 +187,4 @@ function ff-ar-custom() {
 	else
         ffmpeg -hide_banner -loglevel error -i "$1" -c copy -map 0 -bsf:v "h264_metadata=sample_aspect_ratio=$2" -aspect $3 -pix_fmt yuv420p -movflags faststart "_$1"
 	fi
-}
-
-# ffmpeg fix Non-monotonous DTS
-function ff-dts() {
-	ffmpeg -hide_banner -loglevel error -fflags +igndts -i "$1" -c copy -pix_fmt yuv420p -movflags faststart "temp_$1"
-        mv "$1" "_$1" && mv "temp_$1" "$1"
-}
-
-## ffmpeg wma-to-m4a
-function ff-wma-m4a() {
-        findpath=$1
-        : "${findpath:="."}"
-        find "$findpath" -name '*.wma' | while read -r f ; do
-                dir=$(dirname "$f");
-                file=$(basename "$f");
-                name="${file%.*}";
-                ext="${file##*.}";
-
-                ffmpeg -hide_banner -loglevel error -i "$f" -map 0 -vn -b:a 192k -c:a libfdk_aac "$dir/temp_$name.mp4";
-
-                mv "$f" "$dir/_$file";
-                mv "$dir/temp_$name.mp4" "$dir/$file";
-        done
-}
-
-## ffmpeg cut X seconds from start
-function ff-cutstart {
-        local time="${2:-00:00:08.590}"
-        mv "$1" "_$1"
-        ffmpeg -hide_banner -loglevel error -ss $time -i "_$1" -map 0 -c copy -movflags faststart "$1"
-}
-
-## ffmpeg cut X seconds from start
-function ff-cutend {
-        local time="${2:-24.250}"
-        duration=`ffprobe -v error -show_entries format=duration -of csv=p=0 "$1"`
-        duration=`bc --expression=$duration-$time`
-        mv "$1" "_$1"
-        ffmpeg -hide_banner -loglevel error -ss 00:00:00 -to $duration -i "_$1" -map 0 -c copy -movflags faststart "$1"
 }
