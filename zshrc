@@ -15,9 +15,9 @@ source "$HOME/.dotfiles/zsh/settings"
 # Define platform
 platform='Unknown'
 if [[ $(uname) == 'Linux' ]]; then
-   platform='Linux'
+    platform='Linux'
 elif [[ $(uname) == 'Darwin' ]]; then
-   platform='macOS'
+    platform='macOS'
 fi
 
 # Define CPU architecture

@@ -46,9 +46,9 @@ alias sc='screen -R'
 
 # youtube-dl / yt-dlp
 if [[ -x $(which yt-dlp) ]]; then
-        alias ydl='yt-dlp'
+	alias ydl='yt-dlp'
 elif [[ -x $(which youtube-dl) ]]; then
-        alias ydl='youtube-dl'
+	alias ydl='youtube-dl'
 fi
 
 # youtube-dl(p) - Download only best MP4
