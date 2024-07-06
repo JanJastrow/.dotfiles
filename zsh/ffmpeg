@@ -101,7 +101,7 @@ ff-av1-scale720p() {
 
 # ffmpeg function to find borders for cropping
 function ff-crop() {
-	ffmpeg -hide_banner -loglevel error -i "$1" -vf cropdetect,metadata=mode=print -f null - 2>&1 | awk '/crop=/ { print $NF }'
+	ffmpeg -hide_banner -loglevel info -i "$1" -vf cropdetect,metadata=mode=print -f null - 2>&1 | awk '/crop=/ { print $NF }'
 }
 
 # ffmpeg fix Non-monotonous DTS
