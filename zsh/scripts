@@ -49,7 +49,7 @@ function pushover() {
     https://api.pushover.net/1/messages.json
 }
 
-# png to jpg 85
+# png to jpg 95
 function png2web() {
         findpath=$1
         : "${findpath:="."}"
@@ -57,13 +57,13 @@ function png2web() {
             dir=$(dirname "$f");
             file=$(basename "$f");
             name="${file%.*}";
-		magick convert "$f" pnm:- | cjpeg -progressive -quality 85 > "$dir/$name.jpg" </dev/null
+		magick "$f" pnm:- | cjpeg -progressive -optimize -quality 95 > "$dir/$name.jpg" </dev/null
 	rm -f "$f";
     done
 }
 
 function jpeg1024() {
-        magick "$1" -resize '1024x1024\>' -background black -flatten TGA:- | cjpeg -targo -quality 75 -optimize -progressive -outfile "$1".jpg
+        magick "$1" -resize '1024x1024\>' -background black -flatten TGA:- | cjpeg -targo -quality 90 -optimize -progressive -outfile "$1".jpg
 }
 
 # Make PDFs look like scanned
