@@ -95,8 +95,8 @@ ff-av1-scale720p() {
 	done
 }
 
-# Recompress input MP4 to 560p AV1 MP4 (copy audio)
-ff-av1-scale560p() {
+# Recompress input MP4 to 540p AV1 MP4 (copy audio)
+ff-av1-scale540p() {
         for input in *.mp4; do
         if [[ -f "$input" ]]; then
                 tempfile="temp_${input%.mp4}"
