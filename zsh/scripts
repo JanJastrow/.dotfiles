@@ -65,7 +65,7 @@ function png2jpeg() {
 }
 
 function jpeg1024() {
-        magick "$1" -resize '1024x1024\>' -background black -flatten TGA:- | cjpeg -targo -quality 90 -optimize -progressive -outfile "$1".jpg
+        magick "$1" -resize '1024x1024\>' -background black -flatten TGA:- | cjpeg -targo -optimize -progressive -quality 90 -outfile "$1".jpg
 }
 
 # Make PDFs look like scanned
