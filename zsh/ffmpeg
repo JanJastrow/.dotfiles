@@ -94,6 +94,7 @@ ff-av1-scale720p() {
                 fi
         fi
 	done
+        pushover "FFmpeg done ✔"
 }
 
 # Recompress input MP4 to 540p AV1 MP4 (copy audio)
@@ -112,6 +113,7 @@ ff-av1-scale540p() {
                 fi
         fi
 	done
+        pushover "FFmpeg done ✔"
 }
 
 #
