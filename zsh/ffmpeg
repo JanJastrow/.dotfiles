@@ -80,10 +80,11 @@ ff-x264-scale540p() {
 
 # Recompress input MP4 to 720p AV1 MP4 (copy audio)
 ff-av1-scale720p() {
+        local crf=${1-23}
         for input in *.mp4; do
         if [[ -f "$input" ]]; then
                 tempfile="temp_${input%.mp4}"
-                ffmpeg -hide_banner -loglevel info -i "$input" -vf format=yuv420p10le,scale=1280:-2 -c:v libsvtav1 -preset 6 -crf 23 -g 30 -svtav1-params tune=0 -c:a copy -c:s copy "$tempfile.mp4"
+                ffmpeg -hide_banner -loglevel info -i "$input" -vf format=yuv420p10le,scale=1280:-2 -c:v libsvtav1 -preset 6 -crf "$crf" -g 30 -svtav1-params tune=0 -c:a copy -c:s copy "$tempfile.mp4"
                 if [[ $? -eq 0 ]]; then
                         mv "$input" "_$input"
                         mv "$tempfile.mp4" "$input"
@@ -97,10 +98,11 @@ ff-av1-scale720p() {
 
 # Recompress input MP4 to 540p AV1 MP4 (copy audio)
 ff-av1-scale540p() {
+        local crf=${1-23}
         for input in *.mp4; do
         if [[ -f "$input" ]]; then
                 tempfile="temp_${input%.mp4}"
-                ffmpeg -hide_banner -loglevel info -i "$input" -vf format=yuv420p10le,scale=960:-2 -c:v libsvtav1 -preset 6 -crf 23 -g 30 -svtav1-params tune=0 -c:a copy -c:s copy "$tempfile.mp4"
+                ffmpeg -hide_banner -loglevel info -i "$input" -vf format=yuv420p10le,scale=960:-2 -c:v libsvtav1 -preset 6 -crf "$crf" -g 30 -svtav1-params tune=0 -c:a copy -c:s copy "$tempfile.mp4"
                 if [[ $? -eq 0 ]]; then
                         mv "$input" "_$input"
                         mv "$tempfile.mp4" "$input"
