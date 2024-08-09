@@ -49,8 +49,8 @@ function pushover() {
     https://api.pushover.net/1/messages.json
 }
 
-# png to jpg 95
-function png2web() {
+# png to jpeg 95
+function png2jpeg() {
         findpath=$1
         : "${findpath:="."}"
         find "$findpath" -name '*.png' | while read -r f ; do
