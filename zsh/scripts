@@ -105,7 +105,7 @@ function dl() {
         echo "usage: dl url (directory)"
         return
     fi
-    if [[ -x $(which aria2) ]]; then
+    if [[ -x $(which aria2c) ]]; then
         aria2c --dir="$HOME/Downloads" --continue=true --max-connection-per-server=5 "$1"
     else
         (cd "$HOME/Downloads" && curl -O "$1")
