@@ -39,15 +39,17 @@ function manp() {
     man -t $1 | pstopdf -o $TMPDIR/$1.pdf && open $TMPDIR/$1.pdf && sleep 1 && rm $TMPDIR/$1.pdf 
 }
 
-# pushover notification
-function pushover() {
-    curl -s \
-    --form-string "token=$pushover_token" \
-    --form-string "user=$pushover_user" \
-    --form-string "title=$HOST" \
-    --form-string "message=$1" \
-    https://api.pushover.net/1/messages.json
-}
+# Send pushover notification (if set)
+if [[ -z "$pushover_token" ]]; then
+    function pushover() {
+        curl -s \
+        --form-string "token=$pushover_token" \
+        --form-string "user=$pushover_user" \
+        --form-string "title=$HOST" \
+        --form-string "message=$1" \
+        https://api.pushover.net/1/messages.json
+    }
+fi
 
 # png to jpeg 95
 function png2jpeg() {
