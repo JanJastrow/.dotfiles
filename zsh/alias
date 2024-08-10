@@ -44,7 +44,7 @@ alias random32='echo $(date +%s | md5sum | head -c 32)'
 alias untargz='tar -xzvf'
 
 # (macOS) start Firefox Profile manager
-if test -x '/Applications/Firefox.app/Contents/MacOS/firefox-bin'; then
+if [[ -x '/Applications/Firefox.app/Contents/MacOS/firefox-bin' ]]; then
 	alias firefox-pm='/Applications/Firefox.app/Contents/MacOS/firefox-bin -P'
 fi
 
