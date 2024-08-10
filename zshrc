@@ -12,6 +12,11 @@ prompt_color2="#000000"
 # Load zsh settings
 source "$HOME/.dotfiles/zsh/settings"
 
+# Run command when connected via SSH
+if [[ $- =~ i ]] && [[ -z "$TMUX" ]] && [[ -n "$SSH_TTY" ]]; then
+    tmux attach-session -t default || tmux new-session -s default
+fi
+
 # Define platform
 platform='Unknown'
 if [[ $(uname) == 'Linux' ]]; then
