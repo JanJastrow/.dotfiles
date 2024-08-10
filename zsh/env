@@ -37,6 +37,10 @@ fi
 # Path additions
 #
 
+if test -d "$HOME/.dotfiles/scripts"; then
+    export PATH="$HOME/.dotfiles/scripts:$PATH"
+fi
+
 if test -d "/opt/homebrew/"; then
     export PATH="/opt/homebrew/bin:$PATH"
     eval "$(/opt/homebrew/bin/brew shellenv)"
