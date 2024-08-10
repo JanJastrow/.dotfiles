@@ -70,6 +70,6 @@ alias makeitmine='sudo chown -R $(whoami) ./'
 # ---
 # .dotfiles
 
-alias dotf='cd ~/.dotfiles'
+alias dotfiles='cd ~/.dotfiles'
 alias dotfu='cd ~/.dotfiles; git pull; cd -; source ~/.zshrc'
 alias reload-zsh='source ~/.zshrc'
