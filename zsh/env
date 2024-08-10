@@ -30,7 +30,7 @@ if [[ $platform == 'Linux' ]]; then
 elif [[ $platform == 'macOS' && -x $(which gls) ]]; then
 	alias bls='pwd; gls -lahpG --group-directories-first'
 elif [[ $platform == 'macOS' ]]; then
-	alias bls='/bin/ls -lahG'
+	alias bls='pwd; /bin/ls -lahGp'
 fi
 
 #
