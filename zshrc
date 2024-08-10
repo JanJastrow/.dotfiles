@@ -13,6 +13,8 @@ prompt_color2="#000000"
 source "$HOME/.dotfiles/zsh/settings"
 
 # Run command when connected via SSH
+# via: https://stackoverflow.com/questions/27613209/how-to-automatically-start-tmux-on-ssh-session/40192494#40192494
+#
 if [[ $- =~ i ]] && [[ -z "$TMUX" ]] && [[ -n "$SSH_TTY" ]]; then
     tmux attach-session -t default || tmux new-session -s default
 fi
