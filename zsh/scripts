@@ -65,7 +65,7 @@ function png2jpeg() {
 }
 
 function jpeg1024() {
-        magick "$1" -resize '1024x1024\>' -background black -flatten TGA:- | cjpeg -targo -optimize -progressive -quality 90 -outfile "$1".jpg
+    magick "$1" -resize '1024x1024\>' -background black -flatten TGA:- | cjpeg -targo -optimize -progressive -quality 90 -outfile "$1".jpg
 }
 
 # Make PDFs look like scanned
@@ -104,11 +104,11 @@ function extract () {
 # Download provided url to $HOME/Downloads
 function dl() {
     if [ -z "$1" ]; then
-        echo "usage: dl url (directory)"
+        echo "usage: dl url --- downloads to $HOME/Downloads"
         return
     fi
     if [[ -x $(which aria2c) ]]; then
-        aria2c --dir="$HOME/Downloads" --continue=true --max-connection-per-server=5 "$1"
+        aria2c --dir="$HOME/Downloads" --continue=true --max-connection-per-server=4 "$1"
     else
         (cd "$HOME/Downloads" && curl -O "$1")
     fi
