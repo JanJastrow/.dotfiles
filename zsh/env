@@ -11,13 +11,26 @@ export LC_TYPE=en_US.UTF-8
 # set default editor
 export EDITOR="nano"
 
-# set `ll` command - b(etter)ls per default
+# set `ll` alias
+# eza > lsd > bls
 alias ll=bls
-if test -x "$(which eza)"; then
-    alias ll=eza
-fi
-if test -x "$(which lsd)"; then
+
+if [[ -x $(which lsd) ]]; then
 	alias ll=lsd
+    alias lsd='pwd; lsd -laF --group-dirs=first --icon=never'
+fi
+if [[ -x $(which eza) ]]; then
+    alias ll=eza
+    alias eza='pwd; eza --long --all --all --group-directories-first --git --group'
+fi
+
+## Better LS
+if [[ $platform == 'Linux' ]]; then
+	alias bls='pwd; ls -lahp --color=auto --group-directories-first'
+elif [[ $platform == 'macOS' && -x $(which gls) ]]; then
+	alias bls='pwd; gls -lahpG --group-directories-first'
+elif [[ $platform == 'macOS' ]]; then
+	alias bls='/bin/ls -lahG'
 fi
 
 #

@@ -2,26 +2,6 @@
 # filename:     /zsh/alias
 #--------------------------------
 
-# Better LS
-if [[ $platform == 'Linux' ]]; then
-	alias bls='pwd; ls -lahp --color=auto --group-directories-first'
-elif [[ $platform == 'macOS' && -x $(which gls) ]]; then
-	alias bls='pwd; gls -lahpG --group-directories-first'
-elif [[ $platform == 'macOS' ]]; then
-	alias bls='/bin/ls -lahG'
-fi
-
-# Better eza
-if [[ -x $(which eza) ]]; then
-	alias eza='pwd; eza --long --all --all --group-directories-first --git --group'
-	# --all (2x) to show `.` and `..` directories as well
-fi
-
-# Better lsd
-if [[ -x $(which lsd) ]]; then
-    alias lsd='pwd; lsd -laF --group-dirs=first --icon=never'
-fi
-
 # Update tools/OS aliases
 if [[ -x $(which brew) ]]; then
 	alias brewupdate='brew update; brew upgrade; brew upgrade --cask; brew cleanup'
