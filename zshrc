@@ -17,6 +17,7 @@ source "$HOME/.dotfiles/zsh/settings"
 #
 if [[ $- =~ i ]] && [[ -z "$TMUX" ]] && [[ -n "$SSH_TTY" ]]; then
     tmux attach-session -t default || tmux new-session -s default
+    exit
 fi
 
 # Define platform
