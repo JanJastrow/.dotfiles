@@ -13,10 +13,10 @@ export EDITOR="nano"
 
 # set `ll` command - b(etter)ls per default
 alias ll=bls
-if test -f "$homebrew_path/eza"; then
+if test -x "$(which eza)"; then
     alias ll=eza
 fi
-if test -f "$homebrew_path/lsd"; then
+if test -x "$(which lsd)"; then
 	alias ll=lsd
 fi
 
