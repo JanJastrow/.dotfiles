@@ -105,7 +105,7 @@ fi
 if [[ $platform == 'Linux' ]]; then
 	alias bls='pwd; ls -lahp --color=auto --group-directories-first'
 elif [[ $platform == 'macOS' && -x $(which gls) ]]; then
-	alias bls='pwd; gls -lahpG --group-directories-first'
+	alias bls='pwd; gls -lahpG --group-directories-first --color-scale --time-style=long-iso'
 elif [[ $platform == 'macOS' ]]; then
 	alias bls='pwd; /bin/ls -lahGp'
 fi
