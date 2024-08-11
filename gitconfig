@@ -11,7 +11,7 @@
 [alias]
 	a = add
 	br = branch
-	c = commit
+	c = commit -m
 	ca = c -a
 	co = checkout
 	conflict = diff --name-only --diff-filter=U
@@ -19,7 +19,8 @@
 	hash = !git rev-parse HEAD | cut -c 1-8
 	l = log --all --color --graph --pretty=format:'%Cred%h%Creset %G?%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit # Colorful and easy to read log
 	last = log -1 HEAD --stat
-	p = pull
+	pl = pull
+	pu = push
 	rv = remote -v
 	se = !git rev-list --all | xargs git grep -F
 	st = status -sb
