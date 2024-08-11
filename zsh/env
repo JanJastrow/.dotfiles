@@ -11,28 +11,6 @@ export LC_TYPE=en_US.UTF-8
 # set default editor
 export EDITOR="nano"
 
-# set `ll` alias
-# eza > lsd > bls
-alias ll=bls
-
-if [[ -x $(which lsd) ]]; then
-	alias ll=lsd
-    alias lsd='pwd; lsd -laF --group-dirs=first --icon=never'
-fi
-if [[ -x $(which eza) ]]; then
-    alias ll=eza
-    alias eza='pwd; eza --long --all --all --group-directories-first --git --group'
-fi
-
-## Better LS
-if [[ $platform == 'Linux' ]]; then
-	alias bls='pwd; ls -lahp --color=auto --group-directories-first'
-elif [[ $platform == 'macOS' && -x $(which gls) ]]; then
-	alias bls='pwd; gls -lahpG --group-directories-first'
-elif [[ $platform == 'macOS' ]]; then
-	alias bls='pwd; /bin/ls -lahGp'
-fi
-
 #
 # Path additions
 #
@@ -107,4 +85,27 @@ if command -v thefuck >/dev/null 2>&1; then
     fuck() {
         eval "$(thefuck --alias)" && fuck
     }
+fi
+
+#
+# `ll` Setup
+# eza > lsd > bls
+alias ll=bls
+
+if [[ -x $(which lsd) ]]; then
+	alias ll=lsd
+    alias lsd='pwd; lsd -laF --group-dirs=first --icon=never'
+fi
+if [[ -x $(which eza) ]]; then
+    alias ll=eza
+    alias eza='pwd; eza --long --all --all --group-directories-first --git --group'
+fi
+
+## Better LS
+if [[ $platform == 'Linux' ]]; then
+	alias bls='pwd; ls -lahp --color=auto --group-directories-first'
+elif [[ $platform == 'macOS' && -x $(which gls) ]]; then
+	alias bls='pwd; gls -lahpG --group-directories-first'
+elif [[ $platform == 'macOS' ]]; then
+	alias bls='pwd; /bin/ls -lahGp'
 fi
