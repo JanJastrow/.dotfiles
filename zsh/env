@@ -21,7 +21,7 @@ fi
 
 if test -d "/opt/homebrew/"; then
     export PATH="/opt/homebrew/bin:$PATH"
-    eval "$(/opt/homebrew/bin/brew shellenv)"
+    eval "$($(which brew) shellenv)"
 fi
 
 if test -d "/home/linuxbrew/.linuxbrew/"; then
