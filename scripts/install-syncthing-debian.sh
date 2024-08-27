@@ -1,4 +1,5 @@
-#!/bin/sh
+#!/usr/bin/env bash
+set -euo pipefail
 
 # Add the release PGP keys:
 sudo mkdir -p /etc/apt/keyrings
