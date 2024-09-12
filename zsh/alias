@@ -19,10 +19,7 @@ alias fucking='sudo'
 alias please='sudo'
 
 # aria2c
-alias a2='aria2c -x4 -c -m3'
-
-# screen reconnect/init
-alias sc='screen -R'
+alias a2='aria2c --continue --max-connection-per-server=5 --max-tries=3 --timeout=20 --connect-timeout=20'
 
 # youtube-dl / yt-dlp
 if [[ -x $(which yt-dlp) ]]; then
