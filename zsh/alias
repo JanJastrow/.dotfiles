@@ -18,6 +18,10 @@ alias tm='tmux -u new -A -s default'
 alias fucking='sudo'
 alias please='sudo'
 
+# clear
+alias c='clear'
+alias cl='clear && ll'
+
 # aria2c
 alias a2='aria2c --continue --max-connection-per-server=5 --max-tries=3 --timeout=20 --connect-timeout=20'
 
