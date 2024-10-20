@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -euo pipefail
+set -uo pipefail
 
 # Backup folder
 BACKUP_MAIN="$HOME/backups"
@@ -14,7 +14,7 @@ if [ -d "/etc/iptables/" ]; then
 fi
 
 # Copy LXC confs
-if [ -h "/etc/pve/lxc/" ]; then
+if [ -e "/etc/pve/lxc/" ]; then
 	mkdir -p $BACKUP_MAIN/lxc
 	rm $BACKUP_MAIN/lxc/*.conf
 	sudo cp -R /etc/pve/lxc/* $BACKUP_MAIN/lxc/
