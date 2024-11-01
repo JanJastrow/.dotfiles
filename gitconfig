@@ -20,6 +20,7 @@
 	l = log --all --color --graph --pretty=format:'%Cred%h%Creset %G?%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit # Colorful and easy to read log
 	last = log -1 HEAD --stat
 	pl = pull
+	pr = pull --rebase
 	pu = push
 	rv = remote -v
 	se = !git rev-list --all | xargs git grep -F
