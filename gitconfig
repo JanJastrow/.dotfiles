@@ -10,6 +10,7 @@
     defaultBranch = main
 [alias]
 	a = add
+	aa = add --all
 	br = branch
 	c = commit -m
 	ca = c -a
