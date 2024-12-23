@@ -40,7 +40,6 @@ fi
 
 if test -d "$HOME/.cargo"; then
     export PATH="$HOME/.cargo/bin:$PATH"
-    eval "$(rbenv init -)"
 fi
 
 if test -d "$HOME/.local"; then
