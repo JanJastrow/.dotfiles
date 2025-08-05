@@ -60,6 +60,11 @@ source "$HOME/.dotfiles/this-machine/zsh"
 prompt="%F{$prompt_color2}%K{$prompt_color1}▓▒░ %F%B%n@%m%b%F{$prompt_color1}%K{$prompt_color2}█▓▒░%F{#ffffff}%K{$prompt_color2}%B %D{%Y-%m-%d} %D{%k:%M:%S} 
 %}%F{$prompt_color1}%K{$prompt_color2}%B%~/%b%k%f "
 
+# Set TERM when using ghostty
+if [[ "$TERM_PROGRAM" == "ghostty" ]]; then
+    export TERM=xterm-256color
+fi
+
 # Load private information from second repo
 if [[ -d $HOME/.jan ]]; then
     source "$HOME/.jan/credentials"
