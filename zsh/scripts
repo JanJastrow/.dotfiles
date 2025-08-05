@@ -39,6 +39,42 @@ function manp() {
     man -t $1 | pstopdf -o $TMPDIR/$1.pdf && open $TMPDIR/$1.pdf && sleep 1 && rm $TMPDIR/$1.pdf 
 }
 
+# Convert VOB-Subs to SRT
+# via ChatGPT https://chatgpt.com/share/683d6830-de78-8004-b86e-380a15a92523
+convert_subtitles() {
+  local idx_file base lang out forced
+
+  for idx_file in *.idx; do
+    base="${idx_file:r}"  # z.B. "film-1080p-eng"
+
+    # Standardwerte
+    lang="deu"
+    forced=""
+
+    # Sprache + forced
+    if [[ "$base" =~ -([a-z]{3})-forced$ ]]; then
+      lang="${match[1]}"
+      forced="forced"
+    # Nur Sprache
+    elif [[ "$base" =~ -([a-z]{3})$ ]]; then
+      lang="${match[1]}"
+    # Nur forced → Standardsprache
+    elif [[ "$base" =~ -forced$ ]]; then
+      forced="forced"
+    fi
+
+    # Ziel-Dateiname
+    if [[ -n "$forced" ]]; then
+      out="${lang}.forced.srt"
+    else
+      out="${lang}.srt"
+    fi
+
+    echo "Konvertiere: $idx_file → $out (Sprache: $lang)"
+    vobsubocr -l "$lang" -o "$out" "$idx_file"
+  done
+}
+
 # Send pushover notification (if set)
 if [[ -z "$pushover_token" ]]; then
     function pushover() {
