@@ -41,37 +41,61 @@ function manp() {
 
 # Convert VOB-Subs to SRT
 # via ChatGPT https://chatgpt.com/share/683d6830-de78-8004-b86e-380a15a92523
-convert_subtitles() {
-  local idx_file base lang out forced
+sub_ocr() {
+  local idx_file base lang out
 
   for idx_file in *.idx; do
-    base="${idx_file:r}"  # z.B. "film-1080p-eng"
+    base="${idx_file:r}"
 
-    # Standardwerte
     lang="deu"
-    forced=""
+    out=""
 
-    # Sprache + forced
-    if [[ "$base" =~ -([a-z]{3})-forced$ ]]; then
-      lang="${match[1]}"
-      forced="forced"
-    # Nur Sprache
-    elif [[ "$base" =~ -([a-z]{3})$ ]]; then
-      lang="${match[1]}"
-    # Nur forced → Standardsprache
-    elif [[ "$base" =~ -forced$ ]]; then
-      forced="forced"
-    fi
-
-    # Ziel-Dateiname
-    if [[ -n "$forced" ]]; then
-      out="${lang}.forced.srt"
-    else
-      out="${lang}.srt"
-    fi
+    case "$base" in
+      *-eng-forced | *-forced-eng)
+        lang="eng"
+        out="eng.forced.srt"
+        ;;
+      *-eng)
+        lang="eng"
+        out="eng.srt"
+        ;;
+      *-deu-forced | *-forced-deu | *-ger-forced)
+        lang="deu"
+        out="deu.forced.srt"
+        ;;
+      *-deu | *-ger)
+        lang="deu"
+        out="deu.srt"
+        ;;
+      *-forced)
+        lang="deu"
+        out="deu.forced.srt"
+        ;;
+      *)
+        lang="deu"
+        out="deu.srt"
+        ;;
+    esac
 
     echo "Konvertiere: $idx_file → $out (Sprache: $lang)"
     vobsubocr -l "$lang" -o "$out" "$idx_file"
+  done
+}
+
+# cleanup SRT
+sub_cleanup() {
+  local file
+
+  for file in *.srt; do
+    echo "Bearbeite: $file"
+    # Temporäre Datei zur sicheren Bearbeitung
+    local tmpfile="${file}.tmp"
+
+    # Ersetzungen:
+    # 1. ... → …
+    # 2. | → I
+    # 3. UÜ → Ü
+    sed 's/\.\.\./…/g; s/|/I/g; /s/UÜ/Ü/g' "$file" > "$tmpfile" && mv "$tmpfile" "$file"
   done
 }
 
