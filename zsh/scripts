@@ -95,10 +95,37 @@ sub_cleanup() {
     # 1. ... → …
     # 2. | → I
     # 3. UÜ → Ü
-    sed 's/\.\.\./…/g; s/|/I/g; /s/UÜ/Ü/g' "$file" > "$tmpfile" && mv "$tmpfile" "$file"
+    sed 's/\.\.\./…/g; s/|/I/g;' "$file" > "$tmpfile" && mv "$tmpfile" "$file"
   done
 }
 
+# Clean MP3 metadata
+mp3_cleanup_metadata() {
+  # nullglob lokal setzen damit kein literal "*.mp3" iteriert wird, falls keine Dateien da sind
+  setopt localoptions nullglob 2>/dev/null || true
+
+  local f tmp
+  local files=( *.mp3 )
+
+  if (( ${#files[@]} == 0 )); then
+    echo "Keine .mp3 Dateien im aktuellen Verzeichnis." >&2
+    return 0
+  fi
+
+  for f in "${files[@]}"; do
+    [[ -f "$f" ]] || continue
+    tmp="${f}.tmp.mp3"   # wichtige Änderung: Ausgabe hat eine .mp3 Endung
+
+    # -y überschreibt tmp falls schon vorhanden; -map_metadata 0 behält andere Metadaten bei
+    if ffmpeg -hide_banner -loglevel error -y -i "$f" -map_metadata 0 -metadata n= -metadata TSRC= -c copy "$tmp"; then
+      mv -f -- "$tmp" "$f"
+      echo "Bereinigt: $f"
+    else
+      rm -f -- "$tmp"
+      echo "Fehler beim Bearbeiten: $f" >&2
+    fi
+  done
+}
 # Send pushover notification (if set)
 if [[ -z "$pushover_token" ]]; then
     function pushover() {
