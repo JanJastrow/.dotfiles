@@ -35,8 +35,8 @@ elif [[ -x $(which youtube-dl) ]]; then
 	alias ydl='youtube-dl'
 fi
 
-# youtube-dl(p) - Download only best MP4
-alias ytmp4='ydl -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]/mp4"'
+# youtube-dl(p) - Download only best h264/aac/mp4
+alias ytmp4='ydl -f "137/140/mp4"'
 
 # better scp
 alias bcp='rsync -avzuh --progress --partial'
