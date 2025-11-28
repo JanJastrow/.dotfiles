@@ -1,5 +1,6 @@
 set autoindent # indent a newly created lines
 set tabsize 4
+set tabstospaces
 
 set softwrap # wrap lines
 set atblanks # wrap at empty positions (e.g. space, tabs)
@@ -13,3 +14,5 @@ set scrollercolor #9d5,#111
 set functioncolor #9d5,#111
 set mouse # enable mouse support
 set smarthome # 'Home' key position the cursor smarter
+set afterends # `Ctrl+Right` move to word ends instead of word starts
+set wordchars "_" # recognize '_' as part of a word
