@@ -5,6 +5,7 @@ set tabstospaces
 set softwrap # wrap lines
 set atblanks # wrap at empty positions (e.g. space, tabs)
 
+bind ^l linenumbers main # ctrl+l to toggle
 set linenumbers # show line numbers at the left side
 set numbercolor #9d5,#111
 
