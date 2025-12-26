@@ -26,11 +26,11 @@ function targz() {
         return
     fi
     if [[ ! -x $(which pigz) ]]; then
+        echo "pigz not found, using gzip"
         tar -czf "$1" "$2"
-	echo "gzip"
     else
+        echo "Compressing with pigz"
         tar -c "$2" | pigz > "$1"
-	echo "pigz"
     fi
 }
 
