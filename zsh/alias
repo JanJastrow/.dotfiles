@@ -18,10 +18,6 @@ alias tm='tmux -u new -A -s default'
 alias fucking='sudo'
 alias please='sudo'
 
-# clear
-alias c='clear'
-alias cl='clear && ll'
-
 # aria2c
 alias a2='aria2c --continue --max-connection-per-server=5 --max-tries=3 --timeout=20 --connect-timeout=20'
 
@@ -44,13 +40,32 @@ alias random32='echo $(date +%s | md5sum | head -c 32)'
 # tar extract
 alias untargz='tar -xzvf'
 
-# (macOS) start Firefox Profile manager
-if [[ -x '/Applications/Firefox.app/Contents/MacOS/firefox-bin' ]]; then
-	alias firefox-pm='/Applications/Firefox.app/Contents/MacOS/firefox-bin -P'
+#
+# `ll` Setup
+# eza > lsd > bls
+alias ll=bls
+
+if [[ -x $(which lsd) ]]; then
+	alias ll=lsd
+    alias lsd='pwd; lsd -laF --group-dirs=first --icon=never'
+fi
+if [[ -x $(which eza) ]]; then
+    alias ll=eza
+    alias eza='pwd; eza --long --all --all --group-directories-first --git --group'
 fi
 
-# zspotify (Docker)
-alias zspotify='docker run -v ${HOME}/.zspotify:/root/.zspotify -v ${HOME}/Music:/root/Music -it jsavargas/zspotify'
+## Better LS
+if [[ $platform == 'Linux' ]]; then
+	alias bls='pwd; ls -lahp --color=auto --group-directories-first'
+elif [[ $platform == 'macOS' && -x $(which gls) ]]; then
+	alias bls='pwd; gls -lahpG --group-directories-first --color-scale --time-style=long-iso'
+elif [[ $platform == 'macOS' ]]; then
+	alias bls='pwd; /bin/ls -lahGp'
+fi
+
+# clear & list
+alias c='clear'
+alias cl='clear && ll'
 
 # git
 alias gadd='git add'
