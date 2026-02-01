@@ -14,9 +14,6 @@ fi
 # tmux
 alias tm='tmux -u new -A -s default'
 
-# screen reconnect/init
-alias sc='screen -R'
-
 # For fun
 alias fucking='sudo'
 alias please='sudo'
@@ -71,9 +68,8 @@ alias journ='journalctl -xfe -t'
 # own this dir (+subs)
 alias makeitmine='sudo chown -R $(whoami) ./'
 
-# ---
 # .dotfiles
-
+# ----------------
 alias dotfiles='cd ~/.dotfiles'
 alias dotfu='cd ~/.dotfiles; git pull; cd -; source ~/.zshrc'
 alias reload-zsh='source ~/.zshrc'

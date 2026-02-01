@@ -74,9 +74,8 @@ if test -d "/usr/local/sbin"; then
     export PATH="/usr/local/sbin:$PATH"
 fi
 
-#
 # evals
-#
+# --------
 
 # Replace default `thefuck` eval with suggestion from GitHub
 # https://github.com/nvbn/thefuck/issues/859

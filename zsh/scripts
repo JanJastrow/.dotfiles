@@ -126,6 +126,7 @@ mp3_cleanup_metadata() {
     fi
   done
 }
+
 # Send pushover notification (if set)
 if [[ -z "$pushover_token" ]]; then
     function pushover() {
@@ -186,7 +187,7 @@ function extract () {
         esac
     else
         echo "'$1' is not a valid file"
-    fi  
+    fi
 }
 
 # Download provided url to $HOME/Downloads
@@ -220,7 +221,7 @@ pnotify-online() {
 pnotify-offline() {
     local ip_address="$1"
     echo "Monitoring $ip_address …"
-    
+
     while true; do
         if ! ping -c 1 -W 1 "$ip_address" >/dev/null; then
             echo -e "\07*Ding*"
