@@ -54,6 +54,10 @@ if test -d "/Applications/LM Studio.app/"; then
     export PATH="$PATH:$HOME/.cache/lm-studio/bin"
 fi
 
+if test -d "/Applications/Tailscale.app/Contents/MacOS/"; then
+    export PATH="$PATH:/Applications/Tailscale.app/Contents/MacOS/"
+fi
+
 # Add syncthing synced binary folder to $PATH
 if [[ $platform == 'macOS' ]]; then
     export PATH="$HOME/SyncMac/Apps/bin/universal:$PATH"
