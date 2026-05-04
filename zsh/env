@@ -45,7 +45,7 @@ if test -d "$HOME/.cargo"; then
     export PATH="$HOME/.cargo/bin:$PATH"
 fi
 
-if test -x $(which pnpm); then
+if test -x "$(which pnpm)"; then
   export PNPM_HOME="$HOME/Library/pnpm"
   export PATH="$PATH:$PNPM_HOME"
 fi
