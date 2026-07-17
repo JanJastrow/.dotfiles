@@ -117,7 +117,7 @@ mp3_cleanup_metadata() {
     tmp="${f}.tmp.mp3"   # wichtige Änderung: Ausgabe hat eine .mp3 Endung
 
     # -y überschreibt tmp falls schon vorhanden; -map_metadata 0 behält andere Metadaten bei
-    if ffmpeg -hide_banner -loglevel error -y -i "$f" -map_metadata 0 -metadata n= -metadata TSRC= -c copy "$tmp"; then
+    if ffmpeg -hide_banner -loglevel error -y -i "$f" -map_metadata 0 -metadata n= -metadata TSRC= -metadata comment= -c copy "$tmp"; then
       mv -f -- "$tmp" "$f"
       echo "Bereinigt: $f"
     else
