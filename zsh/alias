@@ -11,6 +11,11 @@ if [[ -x $(which apt) ]]; then
 	alias aptupdate='sudo apt update && sudo apt upgrade -y && sudo apt autoremove -y && sudo apt clean'
 fi
 
+# python3 alias
+if command -v python3 >/dev/null 2>&1 && ! command -v python >/dev/null 2>&1; then
+    alias python='python3'
+fi
+
 # tmux
 alias tm='tmux -u new -A -s default'
 
