@@ -46,112 +46,178 @@ function ff-mp4 () {
 
 # Recompress input MP4 to 720p x264 MP4 (copy audio)
 ff-x264-scale720p() {
-        for input in *.mp4; do
+    local crf=${1-18}
+    for input in *.mp4; do
         if [[ -f "$input" ]]; then
-                tempfile="temp_${input%.mp4}"
-                ffmpeg -hide_banner -loglevel info -i "$input" -c:v libx264 -crf 18 -vf scale=1280:-2 -preset slow -tune film -x264-params "ref=5:bframes=5:crf-max=25:qpmax=34:level=3.1:b-adapt=2:direct=auto:deblock=-1,-1:analyse=all:me=umh:subme=9:trellis=2:psy-rd=1,0.15:vbv-bufsize=17500:vbv-maxrate=17500:rc-lookahead=60" -c:a copy -c:s copy -movflags faststart "$tempfile.mp4"
-                if [[ $? -eq 0 ]]; then
-                        mv "$input" "_$input"
-                        mv "$tempfile.mp4" "$input"
-                        echo "Conversion successful: $input"
-                else
-                        echo "Conversion failed for: $input"
-                fi
+            tempfile="temp_${input%.mp4}"
+            output="${input%.mp4}.mp4"
+
+            ffmpeg -hide_banner -loglevel info -i "$input" -c:v libx264 -crf "$crf" -vf scale=1280:-2 -preset slow -tune film -x264-params "ref=5:bframes=5:crf-max=25:qpmax=34:level=3.1:b-adapt=2:direct=auto:deblock=-1,-1:analyse=all:me=umh:subme=9:trellis=2:psy-rd=1,0.15:vbv-bufsize=17500:vbv-maxrate=17500:rc-lookahead=60" -c:a copy -c:s copy -movflags faststart "$tempfile.mp4"
+
+            if [[ $? -eq 0 ]]; then
+                mv "$input" "_$input"
+                mv "$tempfile.mp4" "$output"
+                echo "Conversion successful: $input → $output"
+            else
+                echo "Conversion failed for: $input"
+            fi
         fi
-	done
+    done
+    pushover "FFmpeg x264 done ✔"
 }
 
 # Recompress input MP4 to 540p x264 MP4 (copy audio)
 ff-x264-scale540p() {
-        for input in *.mp4; do
+    local crf=${1-18}
+    for input in *.mp4; do
         if [[ -f "$input" ]]; then
-                tempfile="temp_${input%.mp4}"
-                ffmpeg -hide_banner -loglevel info -i "$input" -c:v libx264 -crf 18 -vf scale=960:-2 -preset slow -tune film -x264-params "ref=5:bframes=5:crf-max=25:qpmax=34:level=3.1:b-adapt=2:direct=auto:deblock=-1,-1:analyse=all:me=umh:subme=9:trellis=2:psy-rd=1,0.15:vbv-bufsize=17500:vbv-maxrate=17500:rc-lookahead=60" -c:a copy -c:s copy -movflags faststart "$tempfile.mp4"
-                if [[ $? -eq 0 ]]; then
-                        mv "$input" "_$input"
-                        mv "$tempfile.mp4" "$input"
-                        echo "Conversion successful: $input"
-                else
-                        echo "Conversion failed for: $input"
-                fi
+            tempfile="temp_${input%.mp4}"
+            output="${input%.mp4}.mp4"
+
+            ffmpeg -hide_banner -loglevel info -i "$input" -c:v libx264 -crf "$crf" -vf scale=960:-2 -preset slow -tune film -x264-params "ref=5:bframes=5:crf-max=25:qpmax=34:level=3.1:b-adapt=2:direct=auto:deblock=-1,-1:analyse=all:me=umh:subme=9:trellis=2:psy-rd=1,0.15:vbv-bufsize=17500:vbv-maxrate=17500:rc-lookahead=60" -c:a copy -c:s copy -movflags faststart "$tempfile.mp4"
+
+            if [[ $? -eq 0 ]]; then
+                mv "$input" "_$input"
+                mv "$tempfile.mp4" "$output"
+                echo "Conversion successful: $input → $output"
+            else
+                echo "Conversion failed for: $input"
+            fi
         fi
-        done
+    done
+    pushover "FFmpeg x264 done ✔"
 }
 
 # Recompress input MP4 to 720p x265 MP4 (copy audio)
 ff-x265-scale720p() {
-        local crf=${1-20}
-        for input in *.mp4; do
+    local crf=${1-20}
+    for input in *.mp4; do
         if [[ -f "$input" ]]; then
-                tempfile="temp_${input%.mp4}"
-                ffmpeg -hide_banner -loglevel info -i "$input" -map 0 -c:v libx265 -x265-params strong-intra-smoothing=0:rect=0:aq-mode=1:rd=4:psy-rd=0.75:psy-rdoq=4.0:rdoq-level=1:rskip=2 -vf scale=1280:-2 -crf "$crf" -tag:v hvc1 -c:s copy -c:a copy -movflags faststart "$tempfile.mp4"
-                if [[ $? -eq 0 ]]; then
-                        mv "$input" "_$input"
-                        mv "$tempfile.mp4" "$input"
-                        echo "Conversion successful: $input"
-                else
-                        echo "Conversion failed for: $input"
-                fi
+            tempfile="temp_${input%.mp4}"
+            output="${input%.mp4}.mp4"
+
+            ffmpeg -hide_banner -loglevel info -i "$input" -map 0 -c:v libx265 -x265-params strong-intra-smoothing=0:rect=0:aq-mode=1:rd=4:psy-rd=0.75:psy-rdoq=4.0:rdoq-level=1:rskip=2 -vf scale=1280:-2 -crf "$crf" -tag:v hvc1 -c:s copy -c:a copy -movflags faststart "$tempfile.mp4"
+
+            if [[ $? -eq 0 ]]; then
+                mv "$input" "_$input"
+                mv "$tempfile.mp4" "$output"
+                echo "Conversion successful: $input → $output"
+            else
+                echo "Conversion failed for: $input"
+            fi
         fi
-	done
-        pushover "FFmpeg done ✔"
+    done
+    pushover "FFmpeg x265 done ✔"
 }
 
 # Recompress input MP4 to 720p x265 MP4 (copy audio)
-ff-x265-scale720p() {
-        local crf=${1-20}
-        for input in *.mp4; do
+ff-x265-scale540p() {
+    local crf=${1-22}
+    for input in *.mp4; do
         if [[ -f "$input" ]]; then
-                tempfile="temp_${input%.mp4}"
-                ffmpeg -hide_banner -loglevel info -i "$input" -map 0 -c:v libx265 -x265-params strong-intra-smoothing=0:rect=0:aq-mode=1:rd=4:psy-rd=0.75:psy-rdoq=4.0:rdoq-level=1:rskip=2 -vf scale=1280:-2 -crf "$crf" -tag:v hvc1 -c:s copy -c:a copy -movflags faststart "$tempfile.mp4"
-                if [[ $? -eq 0 ]]; then
-                        mv "$input" "_$input"
-                        mv "$tempfile.mp4" "$input"
-                        echo "Conversion successful: $input"
-                else
-                        echo "Conversion failed for: $input"
-                fi
+            tempfile="temp_${input%.mp4}"
+            output="${input%.mp4}.mp4"
+
+            ffmpeg -hide_banner -loglevel info -i "$input" -map 0 -c:v libx265 -x265-params strong-intra-smoothing=0:rect=0:aq-mode=1:rd=4:psy-rd=0.75:psy-rdoq=4.0:rdoq-level=1:rskip=2 -vf scale=960:-2 -crf "$crf" -tag:v hvc1 -c:s copy -c:a copy -movflags faststart "$tempfile.mp4"
+
+            if [[ $? -eq 0 ]]; then
+                mv "$input" "_$input"
+                mv "$tempfile.mp4" "$output"
+                echo "Conversion successful: $input → $output"
+            else
+                echo "Conversion failed for: $input"
+            fi
         fi
-	done
-        pushover "FFmpeg done ✔"
+    done
+    pushover "FFmpeg x265 done ✔"
 }
 
 # Recompress input MP4 to 720p AV1 MP4 (copy audio)
 ff-av1-scale720p() {
-        local crf=${1-23}
-        for input in *.mp4; do
+    local crf=${1-23}
+    for input in *.mp4; do
         if [[ -f "$input" ]]; then
-                tempfile="temp_${input%.mp4}"
-                ffmpeg -hide_banner -loglevel info -i "$input" -vf format=yuv420p10le,scale=1280:-2:flags=lanczos -c:v libsvtav1 -preset 4 -crf "$crf" -g 90 -svtav1-params tune=0 -c:a copy -c:s copy "$tempfile.mp4"
-                if [[ $? -eq 0 ]]; then
-                        mv "$input" "_$input"
-                        mv "$tempfile.mp4" "$input"
-                        echo "Conversion successful: $input"
-                else
-                        echo "Conversion failed for: $input"
-                fi
+            tempfile="temp_${input%.mp4}"
+            output="${input%.mp4}.mp4"
+
+            ffmpeg -hide_banner -loglevel info -i "$input" -vf format=yuv420p10le,scale=1280:-2:flags=lanczos -c:v libsvtav1 -preset 4 -crf "$crf" -g 90 -svtav1-params tune=0 -c:a copy -c:s copy "$tempfile.mp4"
+
+            if [[ $? -eq 0 ]]; then
+                mv "$input" "_$input"
+                mv "$tempfile.mp4" "$output"
+                echo "Conversion successful: $input → $output"
+            else
+                echo "Conversion failed for: $input"
+            fi
         fi
-	done
-        pushover "FFmpeg done ✔"
+    done
+    pushover "FFmpeg AV1 done ✔"
 }
 
 # Recompress input MP4 to 540p AV1 MP4 (copy audio)
 ff-av1-scale540p() {
-        local crf=${1-23}
-        for input in *.mp4; do
+    local crf=${1-23}
+    for input in *.mp4; do
         if [[ -f "$input" ]]; then
-                tempfile="temp_${input%.mp4}"
-                ffmpeg -hide_banner -loglevel info -i "$input" -vf format=yuv420p10le,scale=960:-2 -c:v libsvtav1 -preset 6 -crf "$crf" -g 30 -svtav1-params tune=0 -c:a copy -c:s copy "$tempfile.mp4"
-                if [[ $? -eq 0 ]]; then
-                        mv "$input" "_$input"
-                        mv "$tempfile.mp4" "$input"
-                        echo "Conversion successful: $input"
-                else
-                        echo "Conversion failed for: $input"
-                fi
+            tempfile="temp_${input%.mp4}"
+            output="${input%.mp4}.mp4"
+
+            ffmpeg -hide_banner -loglevel info -i "$input" -vf format=yuv420p10le,scale=960:-2 -c:v libsvtav1 -preset 6 -crf "$crf" -g 30 -svtav1-params tune=0 -c:a copy -c:s copy "$tempfile.mp4"
+
+            if [[ $? -eq 0 ]]; then
+                mv "$input" "_$input"
+                mv "$tempfile.mp4" "$output"
+                echo "Conversion successful: $input → $output"
+            else
+                echo "Conversion failed for: $input"
+            fi
         fi
-	done
-        pushover "FFmpeg done ✔"
+    done
+    pushover "FFmpeg AV1 done ✔"
+}
+
+# Recompress input MP4 to 720p VP9 WebM + Ogg Audio
+ff-webm-scale720p() {
+    local crf=${1-28}
+    for input in *.mp4; do
+        if [[ -f "$input" ]]; then
+            tempfile="temp_${input%.mp4}"
+            output="${input%.mp4}.webm"
+
+            ffmpeg -hide_banner -loglevel info -i "$input" -vf format=yuv420p10le,scale=1280:-2:flags=lanczos -c:v libvpx-vp9 -tile-columns 2 -crf "$crf" -b:v 0 -g 90 -c:a libopus -b:a 160k -sn "$tempfile.webm"
+
+            if [[ $? -eq 0 ]]; then
+                mv "$input" "_$input"
+                mv "$tempfile.webm" "$output"
+                echo "Conversion successful: $input → $output"
+            else
+                echo "Conversion failed for: $input"
+            fi
+        fi
+    done
+    pushover "FFmpeg WebM done ✔"
+}
+
+# Recompress input MP4 to 540p VP9 WebM + Ogg Audio
+ff-webm-scale540p() {
+    local crf=${1-30}
+    for input in *.mp4; do
+        if [[ -f "$input" ]]; then
+            tempfile="temp_${input%.mp4}"
+            output="${input%.mp4}.webm"
+
+            ffmpeg -hide_banner -loglevel info -i "$input" -vf format=yuv420p10le,scale=960:-2:flags=lanczos -c:v libvpx-vp9 -tile-columns 1 -crf "$crf" -b:v 0 -g 90 -c:a libopus -b:a 144k -sn "$tempfile.webm"
+
+            if [[ $? -eq 0 ]]; then
+                mv "$input" "_$input"
+                mv "$tempfile.webm" "$output"
+                echo "Conversion successful: $input → $output"
+            else
+                echo "Conversion failed for: $input"
+            fi
+        fi
+    done
+    pushover "FFmpeg WebM done ✔"
 }
 
 #
