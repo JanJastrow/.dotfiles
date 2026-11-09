@@ -31,3 +31,5 @@
 	sort = -committerdate
 [help]
 	autocorrect = 30
+[credential "https://git.schwerkraftlabor.de"]
+	helper = !tea login helper
