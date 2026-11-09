@@ -7,6 +7,7 @@ png2jxl_lossless() {
     out="${f%.png}.jxl"
     echo "Konvertiere JPEG-XL (lossless): $f -> $out"
     magick "$f" -quality 100 -define jxl:effort=9 "$out"
+    touch -r "$f" "$out"
   done
 }
 
@@ -15,6 +16,7 @@ png2jxl_hq() {
     out="${f%.png}_q95.jxl"
     echo "Konvertiere JPEG-XL (HQ-95%): $f -> $out"
     magick "$f" -quality 95 -define jxl:effort=8 "$out"
+    touch -r "$f" "$out"
   done
 }
 
@@ -23,6 +25,7 @@ png2avif_lossless() {
     out="${f%.png}.avif"
     echo "Konvertiere AVIF (quasi-lossless): $f -> $out"
     magick "$f" -quality 100 -define avif:speed=0 "$out"
+    touch -r "$f" "$out"
   done
 }
 
@@ -31,6 +34,7 @@ png2avif_hq() {
     out="${f%.png}_q80.avif"
     echo "Konvertiere AVIF (HQ-80%): $f -> $out"
     magick "$f" -quality 80 -define avif:speed=2 "$out"
+    touch -r "$f" "$out"
   done
 }
 
@@ -39,6 +43,7 @@ png2webp_lossless() {
     out="${f%.png}.webp"
     echo "Konvertiere WebP (lossless): $f -> $out"
     magick "$f" -define webp:lossless=true -quality 100 "$out"
+    touch -r "$f" "$out"
   done
 }
 
@@ -47,6 +52,7 @@ png2webp_hq() {
     out="${f%.png}_q95.webp"
     echo "Konvertiere WebP (HQ-95%): $f -> $out"
     magick "$f" -quality 95 -define webp:method=6 -define webp:use-sharp-yuv=true "$out"
+    touch -r "$f" "$out"
   done
 }
 
